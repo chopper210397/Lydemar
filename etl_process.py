@@ -1,6 +1,14 @@
 import pandas as pd
 from sqlalchemy import create_engine
 
+# ------------------------------------------------------------------------ #
+#  READING DATA FROM XLSX AND UPLOADING TO A LOCAL POSTGRESQL DATABASE     #
+# ------------------------------------------------------------------------ #
+# How it works?. We get our data from a ERP system, we can't connect to that system with an API
+# or doing webscrapping cause is not available/possible, so instead of that, "two" xlsx files are 
+# downloaded, one for "sales data" and the other for "debtors data", additionaly, we will rename the file
+# so the python script can recognize the path and then make all the ETL process.
+
 ###################### SALES DATA ######################
 # This data comes from "Contabilidad - Reporte Detall. Ventas" section in the facturarya ERP
 
@@ -10,7 +18,7 @@ engine = create_engine('postgresql://postgres:rufo2324@localhost:5432/postgres')
 # Reading the xlsx file 
 df = pd.read_excel("C:/Users/chopper/Downloads/ventas.xlsx", skiprows=1)
 
-# Renaming the column to have a common key name between both tables (ventas/cobranzas)
+# Renaming the column to have a common key name  between both tables (ventas/cobranzas)
 df.rename(columns = {'Serie-Núm.':'document_number'}, inplace = True)
 
 
@@ -58,3 +66,9 @@ with engine.begin() as connection:
         print('The debtors data was uploaded correctly')
 
 
+# ------------------------------------------------------------------------ #
+#              SENDING DATA FROM DATAFRAME TO GOOGLESHEET                  #
+# ------------------------------------------------------------------------ #
+# Why?. Cause our tableau public account can't be connected to our local postgre database,
+# so we have to send our data also to a googlesheet, cause is from there where our 
+# dashboard gets the data.
