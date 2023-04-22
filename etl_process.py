@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 import gspread
 from sqlalchemy import create_engine
 from google.oauth2.service_account import Credentials
@@ -80,13 +81,18 @@ creds = Credentials.from_service_account_file('C:/Users/chopper/Downloads/causal
 
 # Replace the spreadsheet URL with your own
 client = gspread.authorize(creds)
-sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1jBaR-9M_Ow3nQTMtahCnRbhomgp8BWnfhYf0Mj8bRXU/edit#gid=0')
+sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1SvmemA-Ab--VYF-99akJXpV7sPjBoqAtk1PWj2DAGNw/edit#gid=1029470420')
 
 worksheet = sheet.get_worksheet(0)
 
 # Replace 'data' with the name of your dataframe
-df = pd.DataFrame(cobranza_first_100)
-cobranza_first_100.dtypes
-cobranza_first_100 = cobranza_first_100.astype(str)
-# Write the dataframe to the Google Sheet
+df = df.astype(str)
+df = pd.DataFrame(df)
+
+
+# Sending sale data from dataframe to VENTAS PUCALLPA googlesheet
+# The tableau and looker studio dashboards are connected to VENTAS PUCALLPA googlesheet
+# That is our "free database" :D
 worksheet.update([df.columns.values.tolist()] + df.values.tolist())
+
+print('Hello, ' + os.getlogin() + ' your ETL pipeline is working correctly, good job!')
