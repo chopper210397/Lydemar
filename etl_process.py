@@ -1,5 +1,7 @@
 import pandas as pd
+import gspread
 from sqlalchemy import create_engine
+from google.oauth2.service_account import Credentials
 
 # ------------------------------------------------------------------------ #
 #  READING DATA FROM XLSX AND UPLOADING TO A LOCAL POSTGRESQL DATABASE     #
@@ -72,3 +74,19 @@ with engine.begin() as connection:
 # Why?. Cause our tableau public account can't be connected to our local postgre database,
 # so we have to send our data also to a googlesheet, cause is from there where our 
 # dashboard gets the data.
+
+creds = Credentials.from_service_account_file('C:/Users/chopper/Downloads/causal-producer-383222-7d6a6d2e9378.json', 
+                                              scopes=['https://www.googleapis.com/auth/spreadsheets'])
+
+# Replace the spreadsheet URL with your own
+client = gspread.authorize(creds)
+sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1jBaR-9M_Ow3nQTMtahCnRbhomgp8BWnfhYf0Mj8bRXU/edit#gid=0')
+
+worksheet = sheet.get_worksheet(0)
+
+# Replace 'data' with the name of your dataframe
+df = pd.DataFrame(cobranza_first_100)
+cobranza_first_100.dtypes
+cobranza_first_100 = cobranza_first_100.astype(str)
+# Write the dataframe to the Google Sheet
+worksheet.update([df.columns.values.tolist()] + df.values.tolist())
