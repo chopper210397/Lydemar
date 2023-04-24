@@ -75,6 +75,8 @@ with engine.begin() as connection:
 # Why?. Cause our tableau public account can't be connected to our local postgre database,
 # so we have to send our data also to a googlesheet, cause is from there where our 
 # dashboard gets the data.
+# https://m2msupport.net/m2msupport/generate-service-account-key-in-google-cloud-platform-gcp/ 
+# In the link above are some instructions about the service account steps
 
 creds = Credentials.from_service_account_file('C:/Users/chopper/Downloads/causal-producer-383222-7d6a6d2e9378.json', 
                                               scopes=['https://www.googleapis.com/auth/spreadsheets'])
