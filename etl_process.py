@@ -77,8 +77,9 @@ with engine.begin() as connection:
 # dashboard gets the data.
 # https://m2msupport.net/m2msupport/generate-service-account-key-in-google-cloud-platform-gcp/ 
 # In the link above are some instructions about the service account steps
+# This json file is now into our github project, so we have to do reference to this wherever we want/need
 
-creds = Credentials.from_service_account_file('C:/Users/chopper/Downloads/causal-producer-383222-7d6a6d2e9378.json', 
+creds = Credentials.from_service_account_file('C:/Users/chopper/Documents/Lydemar/causal-producer-383222-4f14feab0ec1.json', 
                                               scopes=['https://www.googleapis.com/auth/spreadsheets'])
 
 # Replace the spreadsheet URL with your own
