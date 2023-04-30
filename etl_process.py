@@ -24,6 +24,12 @@ df = pd.read_excel("C:/Users/chopper/Downloads/ventas.xlsx", skiprows=1)
 # Renaming the column to have a common key name  between both tables (ventas/cobranzas)
 df.rename(columns = {'Serie-Núm.':'document_number'}, inplace = True)
 
+# Replacing line break with nothing in the Sucursal column
+df = df.replace(r'\n','', regex=True) 
+
+# Another option is to replace this large names of the sucursal with short names, maybe this is better for us
+# a= df["Sucursal"].unique()[1]
+# df[ df["Sucursal"]==a ]
 
 # Uploading the data
 with engine.begin() as connection:
@@ -99,3 +105,4 @@ df = pd.DataFrame(df)
 worksheet.update([df.columns.values.tolist()] + df.values.tolist())
 
 print('Hello, ' + os.getlogin() + ' your ETL pipeline is working correctly, good job!')
+
