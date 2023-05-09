@@ -115,4 +115,3 @@ df = pd.DataFrame(df)
 worksheet.update([df.columns.values.tolist()] + df.values.tolist())
 
 print('Hello, ' + os.getlogin() + ' your ETL pipeline is working correctly, good job!')
-
