@@ -9,4 +9,6 @@ All the information here is public, feel free to use for practice your analysis 
 3. [Googlesheet Productos tienda] (https://docs.google.com/spreadsheets/d/1YDWs70Lbi0caJn7Qf9wNUPSKrtE1yfDLFFsf9HAA9zM/edit?usp=sharing)
 4. [Lydemar Notion] (https://www.notion.so/12b1c79e8c1d432e9098c1443922310a?v=5cd11b6ff6eb4f35aef68ffed6e2a582) [^1]
 
-[^1]: ra
+[^1]: ra  
+
+[Lydemar Web Page] (https://lydemar.vercel.app/ventas/registro)
