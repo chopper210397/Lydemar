@@ -10,13 +10,34 @@ app = firebase_admin.initialize_app(cred)
 store = firestore.client()
 doc_ref = store.collection(u'products')
 
+
+# GET DATA FROM FIRESTORE
+try:
+    docs = doc_ref.get()
+    for doc in docs:
+        print(u'Doc Data:{}'.format(doc.to_dict()))
+except google.cloud.exceptions.NotFound:
+    print(u'Missing data')
+
+# UPLOAD DATA TO FIRESTORE ONE BY ONE
+doc_ref.add({u'brand': u'p-ruvian mar', 
+             u'category': u'vinos',
+             u'img': u'test', 
+             u'name': u'filete de pollo',
+             u'offer': True, 
+             u'price': 24, 
+             u'stock': 35, 
+             u'unit': ["unidad","zapato"], 
+             u'unitXBox': 12
+             })
+
 ###############################################################################
 # UPLOAD DATA IN GROUP BY PANDAS
 
 # Reading csv file
 products_data = pd.read_csv(r"C:\Users\chopper\Documents\Lydemar\firebase_scripts\productos_tienda - data.csv")
 
-products_data["img"] = str(products_data["img"]) 
+products_data["img"] = products_data["img"].astype(str)
 
 unit = []
 n = len(products_data)
