@@ -21,7 +21,6 @@ doc_ref = store.collection(u'products')
 # Connecting googlesheet
 creds = Credentials.from_service_account_file(r'C:\Users\chopper\Documents\Lydemar\business_process\causal-producer-383222-4f14feab0ec1.json', 
                                               scopes=['https://www.googleapis.com/auth/spreadsheets'])
-
 # Reading googlesheet
 client = gspread.authorize(creds)
 sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1YDWs70Lbi0caJn7Qf9wNUPSKrtE1yfDLFFsf9HAA9zM/edit?usp=sharing')
@@ -31,9 +30,8 @@ df=worksheet.get_all_records()
 
 products_data = pd.DataFrame.from_dict(df)
 
-###############################################################################
 # Reading csv file
-products_data = pd.read_csv(r"C:\Users\chopper\Documents\Lydemar\firebase_scripts\productos_tienda - data.csv")
+# products_data = pd.read_csv(r"C:\Users\chopper\Documents\Lydemar\firebase_scripts\productos_tienda - data.csv")
 
 products_data["img"] = products_data["img"].astype(str)
 
