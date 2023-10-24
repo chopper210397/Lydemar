@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Mi web</title>
+  <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<form action="/submit" method="post">
+    <div class="row">
+      <div class="col">
+        <input type="date" name="fecha" placeholder="Fecha">
+      </div>
+      <div class="col">
+        <input type="text" name="nombre_cliente" placeholder="Nombre de cliente">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <input type="text" name="factura_o_nota_de_pedido" placeholder="Factura o nota de pedido">
+      </div>
+      <div class="col">
+        <input type="text" name="n_documento" placeholder="N° de documento">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <input type="text" name="producto" placeholder="Producto">
+      </div>
+      <div class="col">
+        <input type="number" name="cantidad_en_cajas_o_sacos" placeholder="Cantidad en cajas o sacos">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <input type="number" name="precio_x_caja_o_saco" placeholder="Precio x caja o saco">
+      </div>
+      <div class="col">
+        <input type="number" name="totales_en_soles" placeholder="Totales en soles">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <input type="text" name="pago_a_cuenta_efectivo_yape_transferencia" placeholder="Pago a cuenta (efectivo/Yape/Transferencia)">
+      </div>
+      <div class="col">
+        <input type="number" name="debe" placeholder="Debe">
+      </div>
+    </div>
+    <input type="submit" value="Enviar">
+  </form>
+
+</body>
+
+</html>

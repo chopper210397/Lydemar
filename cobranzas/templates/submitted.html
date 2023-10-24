@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Formulario enviado</title>
+</head>
+<body>
+  <h1>Formulario enviado</h1>
+  <p>Gracias por enviar el formulario.</p>
+  <p>Los datos del formulario son los siguientes:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Columna</th>
+        <th>Valor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Fecha</td>
+        <td>{{ fecha }}</td>
+      </tr>
+      <tr>
+        <td>Nombre de cliente</td>
+        <td>{{ nombre_cliente }}</td>
+      </tr>
+      <tr>
+        <td>Factura o nota de pedido</td>
+        <td>{{ factura_o_nota_de_pedido }}</td>
+      </tr>
+      <tr>
+        <td>N° de documento</td>
+        <td>{{ n_documento }}</td>
+      </tr>
+      <tr>
+        <td>Producto</td>
+        <td>{{ producto }}</td>
+      </tr>
+      <tr>
+        <td>Cantidad en cajas o sacos</td>
+        <td>{{ cantidad_en_cajas_o_sacos }}</td>
+      </tr>
+      <tr>
+        <td>Precio x caja o saco</td>
+        <td>{{ precio_x_caja_o_saco }}</td>
+      </tr>
+      <tr>
+        <td>Totales en soles</td>
+        <td>{{ totales_en_soles }}</td>
+      </tr>
+      <tr>
+        <td>Pago a cuenta (efectivo/Yape/Transferencia)</td>
+        <td>{{ pago_a_cuenta_efectivo_yape_transferencia }}</td>
+      </tr>
+      <tr>
+        <td>Debe</td>
+        <td>{{ debe }}</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
