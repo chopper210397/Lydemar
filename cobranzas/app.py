@@ -1,7 +1,7 @@
-from collections.abc import MutableMapping
 from flask import Flask, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
+from collections.abc import MutableMapping
 
 app = Flask(__name__ , template_folder=r'cobranzas\templates' ,static_folder='./cobranzas/static')
 
