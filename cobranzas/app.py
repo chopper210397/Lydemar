@@ -3,7 +3,15 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from collections.abc import MutableMapping
 
-app = Flask(__name__ , template_folder=r'cobranzas\templates' ,static_folder='./cobranzas/static')
+current_dir = os.getcwd()
+template_dir = os.path.join(current_dir, 'cobranzas','templates')
+static_dir = os.path.join(current_dir, 'cobranzas','static')
+
+app = Flask(__name__, template_folder=template_dir , static_folder=static_dir)
+#app = Flask(__name__, template_folder='../cobranzas/templates' ,static_folder='../cobranzas/static')
+# en esta ruta de template_folder y static folder en producción da error si no le pones con los dos puntos
+# mientras que en desarrollo local da error si le pones ambos puntos delante
+# esto debe ser posiblemente debido a que las rutas son distintas en windows y linux
 
 # Rutas
 @app.route('/')
