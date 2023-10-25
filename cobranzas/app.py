@@ -4,8 +4,8 @@ import os
 from collections.abc import MutableMapping
 
 current_dir = os.getcwd()
-template_dir = os.path.join(current_dir, 'cobranzas','templates')
-static_dir = os.path.join(current_dir, 'cobranzas','static')
+template_dir = os.path.join(current_dir,'templates')
+static_dir = os.path.join(current_dir,'static')
 
 app = Flask(__name__, template_folder=template_dir , static_folder=static_dir)
 #app = Flask(__name__, template_folder='../cobranzas/templates' ,static_folder='../cobranzas/static')
