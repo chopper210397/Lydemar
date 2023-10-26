@@ -9,3 +9,6 @@ SQLAlchemy
 Werkzeug
 WTForms
 pandas
+psycopg2
+unidecode
+pretty_html_table
