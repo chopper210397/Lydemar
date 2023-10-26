@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, url_for , jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 from collections.abc import MutableMapping
-from psycopg2 import connect
 import json
 import pandas as pd
 from datetime import datetime
