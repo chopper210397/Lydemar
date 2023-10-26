@@ -9,19 +9,15 @@ from datetime import datetime
 import unidecode
 from pretty_html_table import build_table
 
-
 current_dir = os.getcwd()
-template_dir = os.path.join(current_dir,'cobranzas_development','templates')
-static_dir = os.path.join(current_dir,'cobranzas_development','static')
+template_dir = os.path.join(current_dir,'templates')
+static_dir = os.path.join(current_dir,'static')
 
 app = Flask(__name__, template_folder=template_dir , static_folder=static_dir)
 #app = Flask(__name__, template_folder='../cobranzas/templates' ,static_folder='../cobranzas/static')
 # en esta ruta de template_folder y static folder en producción da error si no le pones con los dos puntos
 # mientras que en desarrollo local da error si le pones ambos puntos delante
 # esto debe ser posiblemente debido a que las rutas son distintas en windows y linux
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@161.35.184.122:5432/lydemar'
-db = SQLAlchemy(app)
 
 class Ventas_tienda_productores(db.Model):
   __tablename__ = 'ventas_tienda_productores'
@@ -53,6 +49,8 @@ class Ventas_tienda_productores(db.Model):
 
     return data
 
+
+
 # Rutas
 @app.route('/')
 def index():
@@ -81,7 +79,6 @@ def submit():
                           totales_en_soles=totales_en_soles, 
                           pago_a_cuenta_efectivo_yape_transferencia=pago_a_cuenta_efectivo_yape_transferencia, 
                           debe=debe)
-
 
 @app.route('/read-data', methods=['GET'])
 def read_data():
