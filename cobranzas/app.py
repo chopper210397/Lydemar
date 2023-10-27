@@ -21,33 +21,66 @@ app = Flask(__name__, template_folder=template_dir , static_folder=static_dir)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@161.35.184.122:5432/lydemar'
 db = SQLAlchemy(app)
 
-class Ventas_tienda_productores(db.Model):
-  __tablename__ = 'ventas_tienda_productores'
+# class Ventas_tienda_productores(db.Model):
+#   __tablename__ = 'ventas_tienda_productores'
+
+#   id = db.Column(db.Integer, primary_key=True)
+#   fecha = db.Column(db.Date)
+#   producto = db.Column(db.String(255))
+#   cantidad = db.Column(db.Integer)
+#   medida = db.Column(db.String(255))
+#   precio_unitario = db.Column(db.Float)
+#   precio_total = db.Column(db.Float)
+#   cliente = db.Column(db.String(255))
+#   timestamp = db.Column(db.DateTime)
+
+#   def to_dict(self):
+#     data = {  
+#       'id': self.id,
+#       'fecha': self.fecha,
+#       'producto': self.producto,
+#       'cantidad': self.cantidad,
+#       'medida': self.medida,
+#       'precio_unitario': self.precio_unitario,
+#       'precio_total': self.precio_total,
+#       'cliente': unidecode.unidecode(self.cliente)
+#     }
+
+#     # Convertir el timestamp a un formato JSON compatible
+#     data['timestamp'] = self.timestamp.strftime('%Y-%m-%dT%H:%M:%S')
+
+#     return data
+
+class Ventas_mayorista(db.Model):
+  __tablename__ = 'ventas_mayorista'
 
   id = db.Column(db.Integer, primary_key=True)
   fecha = db.Column(db.Date)
+  cliente = db.Column(db.String(255))
+  tipo_de_documento = db.Column(db.String(255))
+  numero_documento = db.Column(db.String(255))
   producto = db.Column(db.String(255))
   cantidad = db.Column(db.Integer)
-  medida = db.Column(db.String(255))
+  tipo_medida = db.Column(db.String(255))
   precio_unitario = db.Column(db.Float)
   precio_total = db.Column(db.Float)
-  cliente = db.Column(db.String(255))
   timestamp = db.Column(db.DateTime)
 
   def to_dict(self):
     data = {  
       'id': self.id,
       'fecha': self.fecha,
+      'cliente': self.cliente,
+      'tipo_de_documento': self.tipo_de_documento,
+      'numero_documento': self.numero_documento,
       'producto': self.producto,
       'cantidad': self.cantidad,
-      'medida': self.medida,
+      'tipo_medida': self.tipo_medida,
       'precio_unitario': self.precio_unitario,
       'precio_total': self.precio_total,
-      'cliente': unidecode.unidecode(self.cliente)
+      'timestamp': self.timestamp
     }
 
-    # Convertir el timestamp a un formato JSON compatible
-    data['timestamp'] = self.timestamp.strftime('%Y-%m-%dT%H:%M:%S')
 
     return data
 
@@ -61,31 +94,46 @@ def index():
 @app.route('/submit', methods=['POST'])
 def submit():
   fecha = request.form['fecha']
-  nombre_cliente = request.form['nombre_cliente']
-  factura_o_nota_de_pedido = request.form['factura_o_nota_de_pedido']
-  n_documento = request.form['n_documento']
+  cliente = request.form['cliente']
+  tipo_de_documento = request.form['factura_o_nota_de_pedido']
+  numero_documento = request.form['n_documento']
   producto = request.form['producto']
-  cantidad_en_cajas_o_sacos = request.form['cantidad_en_cajas_o_sacos']
-  precio_x_caja_o_saco = request.form['precio_x_caja_o_saco']
-  totales_en_soles = request.form['totales_en_soles']
-  pago_a_cuenta_efectivo_yape_transferencia = request.form['pago_a_cuenta_efectivo_yape_transferencia']
-  debe = request.form['debe']
+  cantidad = request.form['cantidad_en_cajas_o_sacos']
+  precio_unitario = request.form['precio_x_caja_o_saco']
+  precio_total = request.form['totales_en_soles']
+  timestamp = datetime.now()
+
+  # Creamos un nuevo registro en la base de datos
+  venta = Ventas_mayorista(
+                fecha=fecha, 
+                cliente=cliente,
+                tipo_de_documento=tipo_de_documento,
+                numero_documento=numero_documento,
+                producto=producto,
+                cantidad=cantidad,
+                precio_unitario=precio_unitario,
+                precio_total=precio_total,
+                timestamp=timestamp
+                )
+  db.session.add(venta)
+  db.session.commit()
+  
   return render_template('submitted.html',
                           fecha=fecha, 
-                          nombre_cliente=nombre_cliente, 
-                          factura_o_nota_de_pedido=factura_o_nota_de_pedido, 
-                          n_documento=n_documento, 
-                          producto=producto, 
-                          cantidad_en_cajas_o_sacos=cantidad_en_cajas_o_sacos, 
-                          precio_x_caja_o_saco=precio_x_caja_o_saco, 
-                          totales_en_soles=totales_en_soles, 
-                          pago_a_cuenta_efectivo_yape_transferencia=pago_a_cuenta_efectivo_yape_transferencia, 
-                          debe=debe)
+                          cliente=cliente,
+                          tipo_de_documento=tipo_de_documento,
+                          numero_documento=numero_documento,
+                          producto=producto,
+                          cantidad=cantidad,
+                          precio_unitario=precio_unitario,
+                          precio_total=precio_total
+                          )
+
 
 @app.route('/read-data', methods=['GET'])
 def read_data():
   # Obtener todos los registros
-  ventas = Ventas_tienda_productores.query.all()
+  ventas = Ventas_mayorista.query.all()
 
   # Convertir los registros a un formato JSON
   ventas_json = []
@@ -106,6 +154,11 @@ def read_data():
 
   # Devolver los resultados
   #return jsonify(ventas_json)
+
+@app.route('/ventas', methods=['GET'])
+def raa():
+  ventas = Ventas_mayorista.query.all()
+  return render_template('ventas.html', ventas=ventas)
 
 # Iniciar el servidor
 if __name__ == '__main__':
