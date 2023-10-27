@@ -1,11 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'layout.html' %}
+
+{% block mainContent %}
+
+
+<h1> Ventas Mayoristas Realizadas</h1>
+
+    <table border = 0> 
+        <thead>
+            <td><b>Fecha</b></td>
+            <td><b>Cliente</b></td>
+            <td><b>Tipo Documento</b></td>
+            <td><b>Numero documento</b></td>
+            <td><b>Producto</b></td>
+            <td><b>Cantidad</b></td>
+            <td><b>Medida</b></td>
+            <td><b>Precio unitario</b></td>
+            <td><b>Precio total</b></td>
+        </thead>
+
+    {%for row in ventas %}
+        <tr>
+            <td>{{row["fecha"]}} </td>
+            <td>{{row["cliente"]}} </td>
+            <td>{{row["tipo_de_documento"]}} </td>
+            <td>{{row["numero_documento"]}} </td>
+            <td>{{row["producto"]}} </td>
+            <td>{{row["cantidad"]}} </td>
+            <td>{{row["tipo_medida"]}} </td>
+            <td>{{row["precio_unitario"]}} </td>
+            <td>{{row["precio_total"]}} </td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

@@ -130,31 +130,6 @@ def submit():
                           )
 
 
-@app.route('/read-data', methods=['GET'])
-def read_data():
-  # Obtener todos los registros
-  ventas = Ventas_mayorista.query.all()
-
-  # Convertir los registros a un formato JSON
-  ventas_json = []
-  for venta in ventas:
-    try:
-      ventas_json.append(venta.to_dict())
-    except Exception as e:
-      print(e)
-
-  # Crear un DataFrame de pandas a partir de los datos JSON
-  df = pd.DataFrame(ventas_json)
-
-  # Generar el código HTML de la tabla
-  html_table_blue_light = build_table(df, 'blue_light')
-
-  # Devolver los resultados
-  return html_table_blue_light
-
-  # Devolver los resultados
-  #return jsonify(ventas_json)
-
 @app.route('/ventas', methods=['GET'])
 def raa():
   ventas = Ventas_mayorista.query.all()
@@ -163,3 +138,29 @@ def raa():
 # Iniciar el servidor
 if __name__ == '__main__':
   app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 5000)))
+
+# @app.route('/read-data', methods=['GET'])
+# def read_data():
+#   # Obtener todos los registros
+#   ventas = Ventas_mayorista.query.all()
+
+#   # Convertir los registros a un formato JSON
+#   ventas_json = []
+#   for venta in ventas:
+#     try:
+#       ventas_json.append(venta.to_dict())
+#     except Exception as e:
+#       print(e)
+
+#   # Crear un DataFrame de pandas a partir de los datos JSON
+#   df = pd.DataFrame(ventas_json)
+
+#   # Generar el código HTML de la tabla
+#   html_table_blue_light = build_table(df, 'blue_light')
+
+#   # Devolver los resultados
+#   return html_table_blue_light
+
+#   # Devolver los resultados
+#   #return jsonify(ventas_json)
+
