@@ -18,7 +18,7 @@ app = Flask(__name__, template_folder=template_dir , static_folder=static_dir)
 # mientras que en desarrollo local da error si le pones ambos puntos delante
 # esto debe ser posiblemente debido a que las rutas son distintas en windows y linux
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@161.35.184.122:5432/lydemar'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@161.35.184.122:5432/lydemar_peruvian_delimar'
 db = SQLAlchemy(app)
 
 # class Ventas_tienda_productores(db.Model):
