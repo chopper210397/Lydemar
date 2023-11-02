@@ -1,8 +1,8 @@
 h1 {
   text-align: center;
   font-family: sans-serif;
-  font-size: 24px;
-  color: #000000;
+  font-size: 30px;
+  color: #fffefe;
   margin-top: 20px;
   margin-bottom: 20px;
   border-bottom: 1px solid #cccccc;
@@ -10,7 +10,7 @@ h1 {
 
 body {
   font-family: sans-serif;
-  background-color: #ffffff;
+  background-color: #1d1c1c;
 }
 
 form {
@@ -43,7 +43,7 @@ input {
 }
 
 input[type="submit"] {
-  background-color: #000000;
+  background-color: #2d9517;
   color: #ffffff;
   border: 2px solid #cccccc;
   border-radius: 0.25rem;

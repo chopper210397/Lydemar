@@ -5,7 +5,7 @@
 
 <h1> Ventas Mayoristas Realizadas</h1>
 
-    <table border = 0> 
+    <table class = "styled-table" border = "1"> 
         <thead>
             <td><b>Fecha</b></td>
             <td><b>Cliente</b></td>
@@ -19,7 +19,7 @@
         </thead>
 
     {%for row in ventas %}
-        <tr>
+        <tr class = "active-row">
             <td>{{row["fecha"]}} </td>
             <td>{{row["cliente"]}} </td>
             <td>{{row["tipo_de_documento"]}} </td>

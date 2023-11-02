@@ -8,9 +8,15 @@ from datetime import datetime
 import unidecode
 from pretty_html_table import build_table
 
+# for production environment
 current_dir = os.getcwd()
 template_dir = os.path.join(current_dir,'templates')
 static_dir = os.path.join(current_dir,'static')
+
+# for development environment
+# current_dir = os.getcwd()
+# template_dir = os.path.join(current_dir,'cobranzas','templates')
+# static_dir = os.path.join(current_dir,'cobranzas','static')
 
 app = Flask(__name__, template_folder=template_dir , static_folder=static_dir)
 #app = Flask(__name__, template_folder='../cobranzas/templates' ,static_folder='../cobranzas/static')
@@ -18,7 +24,7 @@ app = Flask(__name__, template_folder=template_dir , static_folder=static_dir)
 # mientras que en desarrollo local da error si le pones ambos puntos delante
 # esto debe ser posiblemente debido a que las rutas son distintas en windows y linux
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@161.35.184.122:5432/lydemar_peruvian_delimar'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:rufo2324@161.35.184.122:5432/lydemar_peruvian_delimar'
 db = SQLAlchemy(app)
 
 # class Ventas_tienda_productores(db.Model):
@@ -99,6 +105,7 @@ def submit():
   numero_documento = request.form['n_documento']
   producto = request.form['producto']
   cantidad = request.form['cantidad_en_cajas_o_sacos']
+  tipo_medida = request.form['tipo_medida']
   precio_unitario = request.form['precio_x_caja_o_saco']
   precio_total = request.form['totales_en_soles']
   timestamp = datetime.now()
@@ -111,6 +118,7 @@ def submit():
                 numero_documento=numero_documento,
                 producto=producto,
                 cantidad=cantidad,
+                tipo_medida=tipo_medida,
                 precio_unitario=precio_unitario,
                 precio_total=precio_total,
                 timestamp=timestamp
@@ -125,6 +133,7 @@ def submit():
                           numero_documento=numero_documento,
                           producto=producto,
                           cantidad=cantidad,
+                          tipo_medida=tipo_medida,
                           precio_unitario=precio_unitario,
                           precio_total=precio_total
                           )
