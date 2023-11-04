@@ -24,4 +24,11 @@ create table ventas_mayorista (
 	precio_unitario numeric,
 	precio_total numeric,
 	timestamp TIMESTAMP
+);
+CREATE TABLE cobranzas (
+	id SERIAL PRIMARY KEY,
+	fecha DATE,
+	numero_documento VARCHAR (40),
+	monto NUMERIC,
+	timestamp TIMESTAMP
 )
