@@ -8,6 +8,7 @@ import os
 import google.cloud
 from firebase_admin import credentials, firestore
 from google.oauth2.service_account import Credentials
+import psycopg2
 
 
 cred = credentials.Certificate("firebase_scripts\ServiceAccountKey.json")
@@ -15,6 +16,46 @@ app = firebase_admin.initialize_app(cred)
 
 store = firestore.client()
 doc_ref = store.collection(u'products')
+
+##############################################
+# UPDATE THE PRODUCTS FROM FIREBASE TO POSTGRESQL
+products_ref = store.collection(u'products')
+
+# Get all the documents in the products collection
+docs = products_ref.get()
+products_list = []
+# Iterate over the documents and get the 'name' attribute
+for doc in docs:
+  name = doc.to_dict()['name']
+  products_list.append(name)
+
+products_list.sort()
+# Connect to the PostgreSQL database
+# 'postgresql://postgres:rufo2324@161.35.184.122:5432/lydemar_peruvian_delimar'
+conn = psycopg2.connect(
+    host="161.35.184.122",
+    port="5432",
+    dbname="lydemar_peruvian_delimar",
+    user="postgres",
+    password="rufo2324"
+)
+
+# Create a cursor
+cur = conn.cursor()
+
+# Insert the products into the database
+for product in products_list:
+  cur.execute(
+      "INSERT INTO products (product_name) VALUES (%s)",
+      (product,)
+  )
+
+# Commit the changes to the database
+conn.commit()
+
+# Close the connection to the database
+conn.close()
+
 
 ###############################################################################
 # UPLOAD DATA IN GROUP BY PANDAS
@@ -66,12 +107,7 @@ print('Succesfull upload')
 
 ###############################################################################
 # GET DATA FROM FIRESTORE
-try:
-    docs = doc_ref.get()
-    for doc in docs:
-        print(u'Doc Data:{}'.format(doc.to_dict()))
-except google.cloud.exceptions.NotFound:
-    print(u'Missing data')
+
 
 # UPLOAD DATA TO FIRESTORE ONE BY ONE
 doc_ref.add({u'brand': u'p-ruvian mar', 

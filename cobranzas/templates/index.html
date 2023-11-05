@@ -40,7 +40,11 @@
         <option value="Factura">Factura</option>
       </select>
       <input type="text" name="n_documento" placeholder="N° de documento">
-      <input type="text" name="producto" placeholder="Producto">
+      <select name="producto" placeholder="Producto">
+        {% for producto in producto %}
+        <option value="{{ producto }}">{{producto}}</option>
+        {% endfor %}
+      </select>
       <input type="number" name="cantidad_en_cajas_o_sacos" placeholder="Cantidad en cajas o sacos">
       <select name="tipo_medida" placeholder="Medida">
         <option value="Caja">CAJA</option>

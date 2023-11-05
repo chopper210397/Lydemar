@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for , jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
+import itertools
 from collections.abc import MutableMapping
 import json
 import pandas as pd
@@ -9,14 +10,14 @@ import unidecode
 from pretty_html_table import build_table
 
 # for production environment
-current_dir = os.getcwd()
-template_dir = os.path.join(current_dir,'templates')
-static_dir = os.path.join(current_dir,'static')
+# current_dir = os.getcwd()
+# template_dir = os.path.join(current_dir,'templates')
+# static_dir = os.path.join(current_dir,'static')
 
 # for development environment
-# current_dir = os.getcwd()
-# template_dir = os.path.join(current_dir,'cobranzas','templates')
-# static_dir = os.path.join(current_dir,'cobranzas','static')
+current_dir = os.getcwd()
+template_dir = os.path.join(current_dir,'cobranzas','templates')
+static_dir = os.path.join(current_dir,'cobranzas','static')
 
 app = Flask(__name__, template_folder=template_dir , static_folder=static_dir)
 #app = Flask(__name__, template_folder='../cobranzas/templates' ,static_folder='../cobranzas/static')
@@ -27,36 +28,7 @@ app = Flask(__name__, template_folder=template_dir , static_folder=static_dir)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:rufo2324@161.35.184.122:5432/lydemar_peruvian_delimar'
 db = SQLAlchemy(app)
 
-# class Ventas_tienda_productores(db.Model):
-#   __tablename__ = 'ventas_tienda_productores'
-
-#   id = db.Column(db.Integer, primary_key=True)
-#   fecha = db.Column(db.Date)
-#   producto = db.Column(db.String(255))
-#   cantidad = db.Column(db.Integer)
-#   medida = db.Column(db.String(255))
-#   precio_unitario = db.Column(db.Float)
-#   precio_total = db.Column(db.Float)
-#   cliente = db.Column(db.String(255))
-#   timestamp = db.Column(db.DateTime)
-
-#   def to_dict(self):
-#     data = {  
-#       'id': self.id,
-#       'fecha': self.fecha,
-#       'producto': self.producto,
-#       'cantidad': self.cantidad,
-#       'medida': self.medida,
-#       'precio_unitario': self.precio_unitario,
-#       'precio_total': self.precio_total,
-#       'cliente': unidecode.unidecode(self.cliente)
-#     }
-
-#     # Convertir el timestamp a un formato JSON compatible
-#     data['timestamp'] = self.timestamp.strftime('%Y-%m-%dT%H:%M:%S')
-
-#     return data
-
+# DEFINING CLASS (MODEL DATABASE)
 class Ventas_mayorista(db.Model):
   __tablename__ = 'ventas_mayorista'
 
@@ -91,11 +63,28 @@ class Ventas_mayorista(db.Model):
     return data
 
 
+class Products(db.Model):
+  __tablename__ = 'products'
+
+  id = db.Column(db.Integer, primary_key=True)
+  product_name = db.Column(db.String(255))
+
+  def to_dict(self):
+    data = {  
+      'id': self.id,
+      'product_name': self.product_name
+    }
+
+    
+    return data
+
 
 # Rutas
 @app.route('/')
 def index():
-  return render_template('index.html')
+  producto=Products.query.with_entities(Products.product_name).all()
+  lista_productos = list(itertools.chain(*producto))
+  return render_template('index.html', producto=lista_productos)
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -147,29 +136,4 @@ def raa():
 # Iniciar el servidor
 if __name__ == '__main__':
   app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 5000)))
-
-# @app.route('/read-data', methods=['GET'])
-# def read_data():
-#   # Obtener todos los registros
-#   ventas = Ventas_mayorista.query.all()
-
-#   # Convertir los registros a un formato JSON
-#   ventas_json = []
-#   for venta in ventas:
-#     try:
-#       ventas_json.append(venta.to_dict())
-#     except Exception as e:
-#       print(e)
-
-#   # Crear un DataFrame de pandas a partir de los datos JSON
-#   df = pd.DataFrame(ventas_json)
-
-#   # Generar el código HTML de la tabla
-#   html_table_blue_light = build_table(df, 'blue_light')
-
-#   # Devolver los resultados
-#   return html_table_blue_light
-
-#   # Devolver los resultados
-#   #return jsonify(ventas_json)
 
