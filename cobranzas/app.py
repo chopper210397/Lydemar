@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for , jsonify
+from flask import Flask, render_template, request, url_for , jsonify, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 import os
 import itertools
@@ -26,6 +26,7 @@ app = Flask(__name__, template_folder=template_dir , static_folder=static_dir)
 # esto debe ser posiblemente debido a que las rutas son distintas en windows y linux
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:rufo2324@161.35.184.122:5432/lydemar_peruvian_delimar'
+app.config['SECRET_KEY'] = 'your_unique_secret_key'
 db = SQLAlchemy(app)
 
 # DEFINING CLASS (MODEL DATABASE)
@@ -78,6 +79,31 @@ class Products(db.Model):
     
     return data
 
+
+class Cobranzas(db.Model):
+  __tablename__ = 'cobranzas'
+
+  id = db.Column(db.Integer, primary_key=True)
+  fecha = db.Column(db.Date)
+  tipo_de_documento = db.Column(db.String(255))
+  numero_documento = db.Column(db.String(255))
+  medio_pago = db.Column(db.String(255))
+  monto = db.Column(db.Integer)
+  timestamp = db.Column(db.DateTime)
+
+  def to_dict(self):
+    data = {  
+      'id': self.id,
+      'fecha': self.fecha,
+      'tipo_de_documento': self.tipo_de_documento,
+      'numero_documento': self.numero_documento,
+      'medio_pago': self.medio_pago,
+      'monto': self.monto,
+      'timestamp': self.timestamp
+    }
+
+
+    return data
 
 # Rutas
 @app.route('/')
@@ -132,6 +158,65 @@ def submit():
 def raa():
   ventas = Ventas_mayorista.query.all()
   return render_template('ventas.html', ventas=ventas)
+
+
+
+@app.route('/cobranzas', methods=['GET', 'POST'])
+def cobranzas():
+  """
+  Página para crear una nueva cobranza.
+  """
+
+  if request.method == 'POST':
+    fecha = request.form['fecha']
+    tipo_de_documento = request.form['tipo_de_documento']
+    numero_documento = request.form['numero_documento']
+    medio_pago = request.form['medio_pago']
+    monto = request.form['monto']
+    timestamp = datetime.now()
+
+    # Creamos un nuevo registro en la base de datos
+    cobranza = Cobranzas(
+      fecha=fecha,
+      tipo_de_documento=tipo_de_documento,
+      numero_documento=numero_documento,
+      medio_pago=medio_pago,
+      monto=monto,
+      timestamp=timestamp
+    )
+    db.session.add(cobranza)
+    db.session.commit()
+    flash(f"Account Succesfully created", "success")
+    # Redirigimos a la página de cobranzas
+    return redirect(url_for('cobranzas'))
+
+  else:
+    return render_template('cobranzas.html')
+
+
+
+
+# @app.route('/cobranzas', methods=['GET', 'POST'])
+# def cobranzas():
+#   fecha = request.form['fecha']
+#   tipo_de_documento = request.form['tipo_de_documento']
+#   numero_documento = request.form['numero_documento']
+#   medio_pago = request.form['medio_pago']
+#   monto = request.form['monto']
+#   timestamp = datetime.now()
+
+#   # Creamos un nuevo registro en la base de datos
+#   cobranza = Cobranzas(
+#                 fecha=fecha, 
+#                 tipo_de_documento=tipo_de_documento,
+#                 numero_documento=numero_documento,
+#                 medio_pago=medio_pago,
+#                 monto=monto,
+#                 timestamp=timestamp
+#                 )
+#   db.session.add(cobranza)
+#   db.session.commit()
+#   return render_template('cobranzas.html')
 
 # Iniciar el servidor
 if __name__ == '__main__':

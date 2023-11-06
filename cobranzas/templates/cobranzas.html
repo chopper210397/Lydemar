@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Mi web</title>
+  <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet" type="text/css">
+  <!-- Sweet alert Js -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+</head>
+
+<body>
+    <div>
+        <!-- Begin alerts -->                
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <script>
+
+            Swal.fire({
+
+                title:"{{ category.title() }}!",
+                // success , error , warning ,info
+
+                text: "{{ message }}",
+                // Custom message flashed from your flask routes
+
+                icon: "{{ category }}" == "danger" ? "error" : "{{ category }}"
+                // success , error , warning ,info
+
+            })
+
+        </script>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <!-- End alerts -->
+</div>
+
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse navbar-collapse-xs" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/" style="font-size: 1.2em; margin-right: 10px;">Inicio </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/ventas" style="font-size: 1.2em; margin-right: 10px;">Ventas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/cobranzas" style="font-size: 1.2em; margin-right: 10px;">Cobranzas <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<h1>Registro de cobranzas</h1>
+  <form action="/cobranzas" method="post">
+    <div class="container">
+      <input type="date" name="fecha" placeholder="Fecha">
+      <select name="tipo_de_documento" placeholder="Factura o Nota de Pedido">
+        <option value="Nota de pedido">Nota de pedido</option>
+        <option value="Factura">Factura</option>
+      </select>
+      <input type="text" name="numero_documento" placeholder="N° de documento">
+      <select name="medio_pago" placeholder="Medio de pago">
+        <option value="Efectivo">Efectivo</option>
+        <option value="Yape/Plin">Yape/Plin</option>
+        <option value="Transferencia">Transferencia</option>
+        <option value="No se sabe">No se sabe</option>
+      </select>
+      <input type="number" name="monto" placeholder="Monto pagado">
+      <input type="submit" value="Registrar">
+    </div>
+  </form>
+
+  
+</body>
+
+</html>

@@ -17,7 +17,9 @@ create table ventas_mayorista (
 CREATE TABLE cobranzas (
 	id SERIAL PRIMARY KEY,
 	fecha DATE,
+	tipo_de_documento VARCHAR(80),
 	numero_documento VARCHAR (40),
+	medio_pago VARCHAR (80),
 	monto NUMERIC,
 	timestamp TIMESTAMP
 );
