@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, url_for , jsonify, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy_utils import create_view
+from sqlalchemy import text
 import os
 import itertools
 from collections.abc import MutableMapping
@@ -13,6 +15,7 @@ from pretty_html_table import build_table
 current_dir = os.getcwd()
 template_dir = os.path.join(current_dir,'templates')
 static_dir = os.path.join(current_dir,'static')
+
 
 # for development environment
 # current_dir = os.getcwd()
@@ -186,7 +189,7 @@ def cobranzas():
     )
     db.session.add(cobranza)
     db.session.commit()
-    flash(f"Account Succesfully created", "success")
+    flash(f"Cobranza registrada :D", "success")
     # Redirigimos a la página de cobranzas
     return redirect(url_for('cobranzas'))
 
@@ -194,29 +197,34 @@ def cobranzas():
     return render_template('cobranzas.html')
 
 
+@app.route('/dashboard', methods=['GET'])
+def dashboard():
+  connection = db.engine.connect()
 
+  sql = text("""
+  SELECT *
+  FROM public.master_ventas_cobranzas 
+  """) 
 
-# @app.route('/cobranzas', methods=['GET', 'POST'])
-# def cobranzas():
-#   fecha = request.form['fecha']
-#   tipo_de_documento = request.form['tipo_de_documento']
-#   numero_documento = request.form['numero_documento']
-#   medio_pago = request.form['medio_pago']
-#   monto = request.form['monto']
-#   timestamp = datetime.now()
+  results = connection.execute(sql)
 
-#   # Creamos un nuevo registro en la base de datos
-#   cobranza = Cobranzas(
-#                 fecha=fecha, 
-#                 tipo_de_documento=tipo_de_documento,
-#                 numero_documento=numero_documento,
-#                 medio_pago=medio_pago,
-#                 monto=monto,
-#                 timestamp=timestamp
-#                 )
-#   db.session.add(cobranza)
-#   db.session.commit()
-#   return render_template('cobranzas.html')
+  # Prepare data to be displayed in the template
+  data = []
+  for row in results:
+      data.append({
+          'numero_documento': row[0],
+          'fecha_venta': row[1],
+          'fecha_ultimo_pago': row[2],
+          'venta_total': row[3],
+          'cobro_total': row[4],
+          'deuda_restante': row[5]
+    })
+  
+  # Close the database connection
+  connection.close()
+
+  # Render the template with the prepared data
+  return render_template('dashboard.html', data=data)
 
 # Iniciar el servidor
 if __name__ == '__main__':

@@ -12,3 +12,4 @@ pandas
 psycopg2
 unidecode
 pretty_html_table
+sqlalchemy_utils

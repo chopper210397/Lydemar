@@ -33,6 +33,36 @@ CREATE VIEW master_numero_documento AS
     FROM public.ventas_mayorista
     order by numero_documento 
 ;
+create view master_ventas_cobranzas as
+-- t1 = cobro por documento
+with t1 as (
+	select 
+		numero_documento ,
+		sum(monto) cobro_total,
+		max(fecha) fecha_ultimo_pago
+	from public.cobranzas c 
+	group by numero_documento 
+	) ,
+--t2 = venta por documento
+t2 as (
+	select 	
+		numero_documento ,
+		sum(precio_total) venta_total,
+		min(fecha) fecha_venta
+	from ventas_mayorista vm 
+	group by numero_documento 
+)
+select 
+	t2.numero_documento,
+	t2.fecha_venta,
+	t1.fecha_ultimo_pago,
+	t2.venta_total,
+	t1.cobro_total,
+	t2.venta_total - coalesce(t1.cobro_total,0) as deuda_restante
+from t2
+left join t1 on t1.numero_documento=t2.numero_documento
+order by t2.fecha_venta asc
+;
 create table ventas_tienda_productores (
 	fecha  DATE,
 	producto VARCHAR(40),

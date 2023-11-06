@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static',filename='css/ventas_style.css') }}" rel="stylesheet" type="text/css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse navbar-collapse-xs" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/" style="font-size: 1.2em; margin-right: 10px;">Inicio </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/ventas" style="font-size: 1.2em; margin-right: 10px;">Ventas </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/cobranzas" style="font-size: 1.2em; margin-right: 10px;">Cobranzas</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/dashboard" style="font-size: 1.2em; margin-right: 10px;">Dashboard <span class="sr-only">(current)</span></a>
+              </li>
+          </ul>
+        </div>
+      </nav> 
+
+    <h1>Dashboard</h1>
+    <table class = "styled-table" border = "1">
+        <thead>
+            <tr>
+                <th>Número de documento</th>
+                <th>Fecha de venta</th>
+                <th>Fecha del último pago</th>
+                <th>Venta total</th>
+                <th>Cobro total</th>
+                <th>Deuda restante</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# Loop over the data and render each row #}
+            {% for row in data %}
+                <tr>
+                    <td>{{ row['numero_documento'] }}</td>
+                    <td>{{ row['fecha_venta'] }}</td>
+                    <td>{{ row['fecha_ultimo_pago'] }}</td>
+                    <td>{{ row['venta_total'] }}</td>
+                    <td>{{ row['cobro_total'] }}</td>
+                    <td>{{ row['deuda_restante'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
