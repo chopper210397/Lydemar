@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, url_for , jsonify, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy_utils import create_view
 from sqlalchemy import text
 import os
 import itertools

@@ -43,6 +43,20 @@
         <option value="Factura">Factura</option>
       </select>
       <input type="text" name="n_documento" placeholder="N° de documento">
+      <select name="vendedor" placeholder="Vendedor">
+        <option value="No eligio vendedor">Seleccione vendedor</option>
+        <option value="Moises Montesinos">Moises Montesinos</option>
+        <option value="Nayda Arostegui">Nayda Arostegui</option>
+      </select>
+      <select name="ubicacion" placeholder="Ubicación">
+        <option value="No eligio ubicacion">Seleccione ubicación</option>
+        <option value="Pucallpa">Pucallpa</option>
+        <option value="Km.86">Km.86</option>
+        <option value="San Alejandro">San Alejandro</option>
+        <option value="Neshuya">Neshuya</option>
+        <option value="Curimana">Curimana</option>
+        <option value="Campo Verde">Campo Verde</option>
+      </select>
       <select name="producto" placeholder="Producto">
         {% for producto in producto %}
         <option value="{{ producto }}">{{producto}}</option>
