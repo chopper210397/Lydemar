@@ -37,6 +37,7 @@
         <thead>
             <tr>
                 <th>Número de documento</th>
+                <th>Cliente</th>
                 <th>Fecha de venta</th>
                 <th>Fecha del último pago</th>
                 <th>Venta total</th>
@@ -49,6 +50,7 @@
             {% for row in data %}
                 <tr>
                     <td>{{ row['numero_documento'] }}</td>
+                    <td>{{ row['cliente'] }}</td>
                     <td>{{ row['fecha_venta'] }}</td>
                     <td>{{ row['fecha_ultimo_pago'] }}</td>
                     <td>{{ row['venta_total'] }}</td>

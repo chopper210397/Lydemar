@@ -223,11 +223,12 @@ def dashboard():
   for row in results:
       data.append({
           'numero_documento': row[0],
-          'fecha_venta': row[1],
-          'fecha_ultimo_pago': row[2],
-          'venta_total': row[3],
-          'cobro_total': row[4],
-          'deuda_restante': row[5]
+          'cliente': row[1],
+          'fecha_venta': row[2],
+          'fecha_ultimo_pago': row[3],
+          'venta_total': row[4],
+          'cobro_total': row[5],
+          'deuda_restante': row[6]
     })
   
   # Close the database connection
