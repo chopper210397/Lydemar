@@ -12,7 +12,9 @@ create table ventas_mayorista (
 	tipo_medida VARCHAR(20),
 	precio_unitario numeric,
 	precio_total numeric,
-	timestamp TIMESTAMP
+	timestamp TIMESTAMP,
+	vendedor VARCHAR(100),
+	ubicacion VARCHAR(100)
 );
 CREATE TABLE cobranzas (
 	id SERIAL PRIMARY KEY,

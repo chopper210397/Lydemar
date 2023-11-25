@@ -46,6 +46,9 @@ class Ventas_mayorista(db.Model):
   precio_unitario = db.Column(db.Float)
   precio_total = db.Column(db.Float)
   timestamp = db.Column(db.DateTime)
+  vendedor = db.Column(db.String(100))
+  ubicacion = db.Column(db.String(100))
+
 
   def to_dict(self):
     data = {  
@@ -59,7 +62,9 @@ class Ventas_mayorista(db.Model):
       'tipo_medida': self.tipo_medida,
       'precio_unitario': self.precio_unitario,
       'precio_total': self.precio_total,
-      'timestamp': self.timestamp
+      'timestamp': self.timestamp,
+      'vendedor': self.vendedor,
+      'ubicacion': self.ubicacion
     }
 
 
@@ -126,6 +131,8 @@ def submit():
   precio_unitario = request.form['precio_x_caja_o_saco']
   precio_total = request.form['totales_en_soles']
   timestamp = datetime.now()
+  vendedor = request.form['vendedor']
+  ubicacion = request.form['ubicacion']
 
   # Creamos un nuevo registro en la base de datos
   venta = Ventas_mayorista(
@@ -138,7 +145,9 @@ def submit():
                 tipo_medida=tipo_medida,
                 precio_unitario=precio_unitario,
                 precio_total=precio_total,
-                timestamp=timestamp
+                timestamp=timestamp,
+                vendedor=vendedor,
+                ubicacion=ubicacion
                 )
   db.session.add(venta)
   db.session.commit()
@@ -148,6 +157,8 @@ def submit():
                           cliente=cliente,
                           tipo_de_documento=tipo_de_documento,
                           numero_documento=numero_documento,
+                          vendedor=vendedor,
+                          ubicacion=ubicacion,
                           producto=producto,
                           cantidad=cantidad,
                           tipo_medida=tipo_medida,
