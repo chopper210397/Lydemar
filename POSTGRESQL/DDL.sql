@@ -65,13 +65,32 @@ from t2
 left join t1 on t1.numero_documento=t2.numero_documento
 order by t2.fecha_venta asc
 ;
-create table ventas_tienda_productores (
-	fecha  DATE,
-	producto VARCHAR(40),
-	cantidad integer,
-	medida VARCHAR(20),
-	precio_unitario numeric,
-	precio_total numeric,
-	cliente VARCHAR(50),
-	timestamp TIMESTAMP
-)
+-- calculo de comisiones mensuales de magle
+create view comisiones_mensuales as 
+	with t3 as (
+	with t2 as (
+	with t1 as (
+	select 
+		date_trunc('day',"date"::date) dia,
+		sum("totalPrice") venta_diaria
+	from ventas_tienda_mercado_mayorista_pucallpa vtmmp
+	where date_trunc('day',"date"::date) not in ('2023-12-10') -- este dia vendió laurita
+	group by dia
+	order by dia desc
+	)
+	select 
+		*
+	from t1
+	where venta_diaria > 1000
+	)
+	select 
+		dia,
+		venta_diaria - 1000 as sobre_meta,
+		(venta_diaria - 1000) * 0.02 as  comision_ganada_diaria
+	from t2
+	)
+	select
+		date_trunc('month', dia) mes,
+		round(sum(comision_ganada_diaria)) as comision_mensual
+	from t3
+	group by mes

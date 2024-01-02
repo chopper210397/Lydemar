@@ -11,15 +11,15 @@ import unidecode
 from pretty_html_table import build_table
 
 # for production environment
-current_dir = os.getcwd()
-template_dir = os.path.join(current_dir,'templates')
-static_dir = os.path.join(current_dir,'static')
+# current_dir = os.getcwd()
+# template_dir = os.path.join(current_dir,'templates')
+# static_dir = os.path.join(current_dir,'static')
 
 
 # for development environment
-# current_dir = os.getcwd()
-# template_dir = os.path.join(current_dir,'cobranzas','templates')
-# static_dir = os.path.join(current_dir,'cobranzas','static')
+current_dir = os.getcwd()
+template_dir = os.path.join(current_dir,'cobranzas','templates')
+static_dir = os.path.join(current_dir,'cobranzas','static')
 
 app = Flask(__name__, template_folder=template_dir , static_folder=static_dir)
 #app = Flask(__name__, template_folder='../cobranzas/templates' ,static_folder='../cobranzas/static')
