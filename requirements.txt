@@ -1,0 +1,10 @@
+pandas
+matplotlib
+sqlalchemy
+gspread
+firebase_admin
+psycopg2
+flask
+flask_sqlalchemy
+pretty_html_table
+unidecode

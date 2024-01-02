@@ -49,3 +49,50 @@ input[type="submit"] {
   border-radius: 0.25rem;
   cursor: pointer;
 }
+
+.productos {
+  display: flex;
+}
+
+/* Ajustes adicionales de estilo si es necesario */
+.productos select,
+.productos input {
+  margin-right: 10px; /* Espacio entre los elementos */
+}
+
+.detalles {
+  display: flex;
+}
+
+/* Ajustes adicionales de estilo si es necesario */
+.detalles select,
+.detalles input {
+  margin-right: 10px; /* Espacio entre los elementos */
+}
+
+.importante {
+  display: flex;
+}
+
+/* Ajustes adicionales de estilo si es necesario */
+.importante select,
+.importante input {
+  margin-right: 10px; /* Espacio entre los elementos */
+}
+
+.numero {
+  width: 90px;
+  height: 40px;
+  background-color: green;
+  color: white;
+  text-align: center;
+  border-radius: 10%; /* Bordes redondos */
+  margin-right: 10px; /* Espacio entre el número y los campos */
+
+  /* Estilos para el número */
+  font-size: 24px; /* Tamaño de fuente más grande */
+  font-weight: bold; /* Texto en negrita */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

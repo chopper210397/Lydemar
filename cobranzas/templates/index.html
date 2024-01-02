@@ -34,43 +34,162 @@
   </nav>
 
 <h1>Registro de ventas</h1>
-  <form action="/submit" method="post">
+  <form action="/" method="post">
     <div class="container">
-      <input type="date" name="fecha" placeholder="Fecha">
-      <input type="text" name="cliente" placeholder="Nombre de cliente">
-      <select name="factura_o_nota_de_pedido" placeholder="Factura o Nota de Pedido">
-        <option value="Nota de pedido">Nota de pedido</option>
-        <option value="Factura">Factura</option>
-      </select>
-      <input type="text" name="n_documento" placeholder="N° de documento">
-      <select name="vendedor" placeholder="Vendedor">
-        <option value="No eligio vendedor">Seleccione vendedor</option>
-        <option value="Moises Montesinos">Moises Montesinos</option>
-        <option value="Nayda Arostegui">Nayda Arostegui</option>
-      </select>
-      <select name="ubicacion" placeholder="Ubicación">
-        <option value="No eligio ubicacion">Seleccione ubicación</option>
-        <option value="Pucallpa">Pucallpa</option>
-        <option value="Km.86">Km.86</option>
-        <option value="San Alejandro">San Alejandro</option>
-        <option value="Neshuya">Neshuya</option>
-        <option value="Curimana">Curimana</option>
-        <option value="Campo Verde">Campo Verde</option>
-      </select>
-      <select name="producto" placeholder="Producto">
-        {% for producto in producto %}
-        <option value="{{ producto }}">{{producto}}</option>
-        {% endfor %}
-      </select>
-      <input type="number" name="cantidad_en_cajas_o_sacos" placeholder="Cantidad en cajas o sacos">
-      <select name="tipo_medida" placeholder="Medida">
-        <option value="Caja">CAJA</option>
-        <option value="Saco">SACO</option>
-      </select>
-      <input type="number" name="precio_x_caja_o_saco" placeholder="Precio x caja o saco">
-      <input type="number" name="totales_en_soles" placeholder="Totales en soles">
+
+      <div class="detalles">
+        <input type="date" name="fecha" placeholder="Fecha">
+        <select name="factura_o_nota_de_pedido" placeholder="Factura o Nota de Pedido">
+          <option value="Nota de pedido">Nota de pedido</option>
+          <option value="Factura">Factura</option>
+        </select>
+        <input type="text" name="n_documento" placeholder="N° de documento">
+      </div>
+
+      <div class="importante">
+        <input type="text" name="cliente" placeholder="Nombre de cliente">
+        <select name="vendedor" placeholder="Vendedor">
+          <option value="No eligio vendedor">Seleccione vendedor</option>
+          <option value="Moises Montesinos">Moises Montesinos</option>
+          <option value="Nayda Arostegui">Nayda Arostegui</option>
+        </select>
+        <select name="ubicacion" placeholder="Ubicación">
+          <option value="No eligio ubicacion">Seleccione ubicación</option>
+          <option value="Pucallpa">Pucallpa</option>
+          <option value="Km.86">Km.86</option>
+          <option value="San Alejandro">San Alejandro</option>
+          <option value="Neshuya">Neshuya</option>
+          <option value="Curimana">Curimana</option>
+          <option value="Campo Verde">Campo Verde</option>
+        </select>
+      </div>  
+
+      <input type="number" name="cantidad_productos_a_registrar" placeholder="Cantidad de Productos a Registrar">
+
+      <div class="productos">
+        <div class="numero">1</div>
+        <select name="producto-0" placeholder="Producto">
+          {% for producto in producto %}
+          <option value="{{ producto }}">{{producto}}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="cantidad_en_cajas_o_sacos-0" placeholder="Cantidad en cajas o sacos">
+        <select name="tipo_medida-0" placeholder="Medida">
+          <option value="Caja">CAJA</option>
+          <option value="Saco">SACO</option>
+        </select>
+        <input type="number" name="precio_x_caja_o_saco-0" placeholder="Precio x caja o saco">
+      </div>
+
+      <div class="productos">
+        <div class="numero">2</div>
+        <select name="producto-1" placeholder="Producto">
+          {% for producto in producto %}
+          <option value="{{ producto }}">{{producto}}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="cantidad_en_cajas_o_sacos-1" placeholder="Cantidad en cajas o sacos">
+        <select name="tipo_medida-1" placeholder="Medida">
+          <option value="Caja">CAJA</option>
+          <option value="Saco">SACO</option>
+        </select>
+        <input type="number" name="precio_x_caja_o_saco-1" placeholder="Precio x caja o saco">
+      </div>
+
+      <div class="productos">
+        <div class="numero">3</div>
+        <select name="producto-2" placeholder="Producto">
+          {% for producto in producto %}
+          <option value="{{ producto }}">{{producto}}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="cantidad_en_cajas_o_sacos-2" placeholder="Cantidad en cajas o sacos">
+        <select name="tipo_medida-2" placeholder="Medida">
+          <option value="Caja">CAJA</option>
+          <option value="Saco">SACO</option>
+        </select>
+        <input type="number" name="precio_x_caja_o_saco-2" placeholder="Precio x caja o saco">
+      </div>
+
+      <div class="productos">
+        <div class="numero">4</div>
+        <select name="producto-3" placeholder="Producto">
+          {% for producto in producto %}
+          <option value="{{ producto }}">{{producto}}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="cantidad_en_cajas_o_sacos-3" placeholder="Cantidad en cajas o sacos">
+        <select name="tipo_medida-3" placeholder="Medida">
+          <option value="Caja">CAJA</option>
+          <option value="Saco">SACO</option>
+        </select>
+        <input type="number" name="precio_x_caja_o_saco-3" placeholder="Precio x caja o saco">
+      </div>
+
+      <div class="productos">
+        <div class="numero">5</div>
+        <select name="producto-4" placeholder="Producto">
+          {% for producto in producto %}
+          <option value="{{ producto }}">{{producto}}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="cantidad_en_cajas_o_sacos-4" placeholder="Cantidad en cajas o sacos">
+        <select name="tipo_medida-4" placeholder="Medida">
+          <option value="Caja">CAJA</option>
+          <option value="Saco">SACO</option>
+        </select>
+        <input type="number" name="precio_x_caja_o_saco-4" placeholder="Precio x caja o saco">
+      </div>
+
+      <div class="productos">
+        <div class="numero">6</div>
+        <select name="producto-5" placeholder="Producto">
+          {% for producto in producto %}
+          <option value="{{ producto }}">{{producto}}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="cantidad_en_cajas_o_sacos-5" placeholder="Cantidad en cajas o sacos">
+        <select name="tipo_medida-5" placeholder="Medida">
+          <option value="Caja">CAJA</option>
+          <option value="Saco">SACO</option>
+        </select>
+        <input type="number" name="precio_x_caja_o_saco-5" placeholder="Precio x caja o saco">
+      </div>
+
+      <div class="productos">
+        <div class="numero">7</div>
+        <select name="producto-6" placeholder="Producto">
+          {% for producto in producto %}
+          <option value="{{ producto }}">{{producto}}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="cantidad_en_cajas_o_sacos-6" placeholder="Cantidad en cajas o sacos">
+        <select name="tipo_medida-6" placeholder="Medida">
+          <option value="Caja">CAJA</option>
+          <option value="Saco">SACO</option>
+        </select>
+        <input type="number" name="precio_x_caja_o_saco-6" placeholder="Precio x caja o saco">
+      </div>
+
+      <div class="productos">
+        <div class="numero">8</div>
+        <select name="producto-7" placeholder="Producto">
+          {% for producto in producto %}
+          <option value="{{ producto }}">{{producto}}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="cantidad_en_cajas_o_sacos-7" placeholder="Cantidad en cajas o sacos">
+        <select name="tipo_medida-7" placeholder="Medida">
+          <option value="Caja">CAJA</option>
+          <option value="Saco">SACO</option>
+        </select>
+        <input type="number" name="precio_x_caja_o_saco-7" placeholder="Precio x caja o saco">
+      </div>
+
       <input type="submit" value="Registrar">
     </div>
+
+
   </form>
 
 </body>
