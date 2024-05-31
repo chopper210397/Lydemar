@@ -209,10 +209,10 @@ def index():
 #     return render_template('index.html', producto=lista_productos)
 
 
-@app.route('/ventas', methods=['GET'])
-def raa():
-  ventas = Ventas_mayorista.query.all()
-  return render_template('ventas.html', ventas=ventas)
+# @app.route('/ventas', methods=['GET'])
+# def raa():
+#   ventas = Ventas_mayorista.query.all()
+#   return render_template('ventas.html', ventas=ventas)
 
 
 
@@ -249,35 +249,35 @@ def cobranzas():
     return render_template('cobranzas.html')
 
 
-@app.route('/dashboard', methods=['GET'])
-def dashboard():
-  connection = db.engine.connect()
+# @app.route('/dashboard', methods=['GET'])
+# def dashboard():
+#   connection = db.engine.connect()
 
-  sql = text("""
-  SELECT *
-  FROM public.master_ventas_cobranzas 
-  """) 
+#   sql = text("""
+#   SELECT *
+#   FROM public.master_ventas_cobranzas 
+#   """) 
 
-  results = connection.execute(sql)
+#   results = connection.execute(sql)
 
-  # Prepare data to be displayed in the template
-  data = []
-  for row in results:
-      data.append({
-          'numero_documento': row[0],
-          'cliente': row[1],
-          'fecha_venta': row[2],
-          'fecha_ultimo_pago': row[3],
-          'venta_total': row[4],
-          'cobro_total': row[5],
-          'deuda_restante': row[6]
-    })
+#   # Prepare data to be displayed in the template
+#   data = []
+#   for row in results:
+#       data.append({
+#           'numero_documento': row[0],
+#           'cliente': row[1],
+#           'fecha_venta': row[2],
+#           'fecha_ultimo_pago': row[3],
+#           'venta_total': row[4],
+#           'cobro_total': row[5],
+#           'deuda_restante': row[6]
+#     })
   
-  # Close the database connection
-  connection.close()
+#   # Close the database connection
+#   connection.close()
 
-  # Render the template with the prepared data
-  return render_template('dashboard.html', data=data)
+#   # Render the template with the prepared data
+#   return render_template('dashboard.html', data=data)
 
 # Iniciar el servidor
 if __name__ == '__main__':

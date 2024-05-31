@@ -1,98 +1,193 @@
-h1 {
-  text-align: center;
-  font-family: sans-serif;
-  font-size: 30px;
-  color: #fffefe;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #cccccc;
+/* Tipografía y fondo */
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+  background-color: #2c2c2c;
+  color: #f4f4f9;
+  margin: 0;
+  padding: 0;
 }
 
-body {
-  font-family: sans-serif;
-  background-color: #1d1c1c;
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #f4f4f9;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #444;
+  padding-bottom: 10px;
 }
 
 form {
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  background: #3c3c3c;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .form-group {
   margin-bottom: 1rem;
-  border: 1px solid #cccccc;
-  border-radius: 0.25rem;
 }
 
-select {
+select, input[type="date"], input[type="text"], input[type="number"] {
   width: 100%;
-  padding: 0.5rem;
+  padding: 10px;
   margin-bottom: 1rem;
-  border: 2px solid #cccccc;
-  border-radius: 0.25rem;
+  border: 1px solid #555;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  background-color: #4c4c4c;
+  color: #f4f4f9;
+  transition: border-color 0.3s ease;
 }
 
-input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 2px solid #cccccc;
-  border-radius: 0.25rem;
+select::placeholder, input[type="date"]::placeholder, input[type="text"]::placeholder, input[type="number"]::placeholder {
+  color: #9b9898; /* Color más claro para los placeholders */
+}
+
+select:focus, input[type="date"]:focus, input[type="text"]:focus, input[type="number"]:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
 input[type="submit"] {
-  background-color: #2d9517;
-  color: #ffffff;
-  border: 2px solid #cccccc;
-  border-radius: 0.25rem;
+  background-color: #007bff;
+  color: #f4f4f9;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Hacer que el botón ocupe todo el ancho del formulario */
+  margin-top: 10px; /* Espacio superior para separar del último campo */
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
 }
 
 .productos {
   display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
 }
 
-/* Ajustes adicionales de estilo si es necesario */
-.productos select,
-.productos input {
+.productos select, .productos input {
+  flex: 1;
   margin-right: 10px; /* Espacio entre los elementos */
 }
 
-.detalles {
+.productos select:last-child, .productos input:last-child {
+  margin-right: 0; /* Sin margen a la derecha para el último elemento */
+}
+
+.detalles, .importante {
   display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
 }
 
-/* Ajustes adicionales de estilo si es necesario */
-.detalles select,
-.detalles input {
+.detalles select, .detalles input, .importante select, .importante input {
+  flex: 1;
   margin-right: 10px; /* Espacio entre los elementos */
 }
 
-.importante {
-  display: flex;
-}
-
-/* Ajustes adicionales de estilo si es necesario */
-.importante select,
-.importante input {
-  margin-right: 10px; /* Espacio entre los elementos */
+.detalles select:last-child, .detalles input:last-child, .importante select:last-child, .importante input:last-child {
+  margin-right: 0; /* Sin margen a la derecha para el último elemento */
 }
 
 .numero {
-  width: 90px;
+  width: 60px;
   height: 40px;
-  background-color: green;
+  background-color: #007bff;
   color: white;
   text-align: center;
-  border-radius: 10%; /* Bordes redondos */
-  margin-right: 10px; /* Espacio entre el número y los campos */
-
-  /* Estilos para el número */
-  font-size: 24px; /* Tamaño de fuente más grande */
-  font-weight: bold; /* Texto en negrita */
+  border-radius: 4px;
+  margin-right: 10px;
+  font-size: 1rem;
+  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+  form {
+    width: 90%;
+  }
+
+  .detalles, .importante, .productos {
+    flex-direction: column;
+  }
+
+  .detalles select, .detalles input, .importante select, .importante input, .productos select, .productos input {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}
+
+
+/*------------------------------------------------------------------------*/
+/* Estilo para la barra de navegación */
+.navbar {
+  background-color: #333; /* Fondo oscuro */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidad */
+  padding: 10px 20px; /* Espaciado interno */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+.navbar-brand img {
+  height: 50px; /* Ajustar la altura del logo */
+  transition: transform 0.3s ease; /* Transición suave */
+}
+
+.navbar-brand img:hover {
+  transform: scale(1.1); /* Efecto de zoom al pasar el ratón */
+}
+
+.navbar-nav .nav-link {
+  color: #f4f4f9; /* Texto claro */
+  font-size: 1.2em;
+  margin-right: 15px; /* Espaciado entre enlaces */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transición suave */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #007bff; /* Cambiar color al pasar el ratón */
+  transform: scale(1.1); /* Efecto de zoom al pasar el ratón */
+}
+
+.navbar-nav .nav-item.active .nav-link {
+  color: #007bff; /* Color diferente para el enlace activo */
+}
+
+.navbar-nav {
+  margin-left: auto; /* Alinear los enlaces a la derecha */
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Ajuste para pantallas pequeñas */
+    align-items: center; /* Centrar los elementos */
+  }
+
+  .navbar-brand, .navbar-nav {
+    margin-bottom: 10px; /* Espacio inferior en pantallas pequeñas */
+  }
+
+  .navbar-nav {
+    flex-direction: column; /* Colocar los enlaces en columna */
+    align-items: center; /* Centrar los enlaces */
+  }
+
+  .navbar-nav .nav-link {
+    margin-right: 0;
+    margin-bottom: 10px; /* Espacio inferior para cada enlace */
+  }
+}
+
