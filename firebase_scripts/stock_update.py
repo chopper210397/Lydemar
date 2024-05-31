@@ -11,28 +11,29 @@ from google.oauth2.service_account import Credentials
 import psycopg2
 import psycopg2.extras as extras
 
+#############################################################################
+# Código para actualizar el listado de productos de firebase hacia postgresql
 
-
-
+# Leyendo el service account credential
 cred = credentials.Certificate("firebase_scripts\ServiceAccountKey.json")
+
+# Creando conexión a la lista productos de nuestro firebase
 app = firebase_admin.initialize_app(cred)
-
 store = firestore.client()
-doc_ref = store.collection(u'products')
-
-##############################################
-# UPDATE THE PRODUCTS FROM FIREBASE TO POSTGRESQL
 products_ref = store.collection(u'products')
 
 # Get all the documents in the products collection
 docs = products_ref.get()
 products_list = []
+
 # Iterate over the documents and get the 'name' attribute
 for doc in docs:
   name = doc.to_dict()['name']
   products_list.append(name)
 
+# Ordenar la lista de productos
 products_list.sort()
+
 # Connect to the PostgreSQL database
 # 'postgresql://postgres:rufo2324@161.35.184.122:5432/lydemar_peruvian_delimar'
 conn = psycopg2.connect(
@@ -140,9 +141,6 @@ from firebase_admin import credentials, firestore
 from google.oauth2.service_account import Credentials
 import psycopg2
 import psycopg2.extras as extras
-
-
-
 
 cred = credentials.Certificate("firebase_scripts\ServiceAccountKey.json")
 app = firebase_admin.initialize_app(cred)
