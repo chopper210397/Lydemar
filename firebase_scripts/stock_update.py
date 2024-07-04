@@ -124,45 +124,72 @@ doc_ref.add({u'brand': u'p-ruvian mar',
              u'unit': ["unidad","zapato"], 
              u'unitXBox': 12
              })
-####################################################################
-# ENVIAR LA DATA DE VENTAS DE FIREBASE A POSTGRESQL
-# importamos libreria
-from sqlalchemy import create_engine
-from sqlalchemy import text
-import csv
-import pandas as pd
+
+
+
+
+
+#-------------------------------------------------------------------------#
+# Traer data de products de firebase para actualizarlo y subirlo de golpe #
+# ------------------------------------------------------------------------#
 import firebase_admin
-from google.oauth2 import service_account
-import gspread
-import json
-import os
-import google.cloud
 from firebase_admin import credentials, firestore
-from google.oauth2.service_account import Credentials
-import psycopg2
-import psycopg2.extras as extras
+import pandas as pd
+import os
+import ast
 
-cred = credentials.Certificate("firebase_scripts\ServiceAccountKey.json")
-app = firebase_admin.initialize_app(cred)
+# Ruta al archivo de credenciales
+cred_path = os.path.join("firebase_scripts", "ServiceAccountKey.json")
 
+# Leyendo el service account credential
+cred = credentials.Certificate(cred_path)
+
+# Creando conexión a la lista productos de nuestro firebase
+firebase_admin.initialize_app(cred)
 store = firestore.client()
+products_ref = store.collection(u'products')
 
-# creamos conexión con la base de datos postgresql
-engine = create_engine('postgresql://postgres:rufo2324@161.35.184.122:5432/lydemar_peruvian_delimar')
-connection = engine.connect()
-# importamos data de firebase de ventas de magle
-doc_ref = store.collection(u'ventasRegistro')
-docs = doc_ref.get()
+# Obtener todos los documentos de la colección products
+docs = products_ref.get()
 
-# insertamos la data dentro de una lista que luego pasaremos a dataframe
-products_list = []
+# Lista para almacenar los datos
+products_data = []
+
+# Recorrer todos los documentos y extraer los datos
 for doc in docs:
-  name = doc.to_dict()
-  products_list.append(name)
+    product = doc.to_dict()
+    products_data.append(product)
+
+# Convertir la lista de diccionarios en un DataFrame
+df = pd.DataFrame(products_data)
+
+# Asegurar que todos los valores en la columna 'id' sean cadenas y llenar valores nulos
+df['id'] = df['id'].fillna('').astype(str)
+
+# Enviamos la lista de productos a un excel para tener un backup
+df.to_excel("products.xlsx", index=False)
+
+# Eliminamos los documentos de colección products para reemplazarlos por el nuevo dataframe
+for doc in docs:
+    doc.reference.delete()
+
+# En esta parte tenemos que actualizar los datos en nuestro excel local según deseemos
+# Luego leemos ese excel y ese excel o dataframe modificado es lo que subirmeos a firebase
+# Leemos excel modificado
+df = pd.read_excel("products.xlsx")
+
+# Convertir la columna 'unit' a listas
+df['unit'] = df['unit'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
+
+# Subir los nuevos datos del DataFrame a Firestore
+for index, row in df.iterrows():
+    product_data = row.to_dict()
+    # Si no hay id, generar uno nuevo
+    if not product_data['id'] or pd.isna(product_data['id']):
+        new_doc_ref = products_ref.document()
+        product_data['id'] = new_doc_ref.id
+    products_ref.document(product_data['id']).set(product_data)
+
+print("Documentos reemplazados exitosamente en la colección 'products'.")
 
 
-# convertimos la lista de ventas a dataframe
-df = pd.DataFrame(products_list)
-
-# exportamos dataframe a postgresql, reemplazamos toda la data de la tabla desde cero
-df.to_sql('ventas_tienda_mercado_mayorista_pucallpa', engine, if_exists='replace')
