@@ -101,6 +101,7 @@ SELECT
     date_trunc('month',Fecha)::date mes,
     round(SUM(Comision)) AS ComisionTotalMes
 FROM ComisionesCalculadas
-where Fecha not in ('2024-06-11','2024-06-12','2024-06-27','2024-06-28') -- son fechas que priscila no trabajó, por ende no se le paga comisiones
+where Fecha not in ('2024-06-11','2024-06-12','2024-06-27','2024-06-28',
+                    '2024-07-05','2024-07-22','2024-07-24') -- son fechas que priscila no trabajó, por ende no se le paga comisiones
 GROUP BY mes
 ORDER BY mes desc;
