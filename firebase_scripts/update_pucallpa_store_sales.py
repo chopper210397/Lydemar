@@ -45,7 +45,7 @@ for doc in docs:
 # Convertimos la lista de ventas a dataframe
 df = pd.DataFrame(products_list)
 
-# Corregimos un error cuando el date es nulo
+# Corregimos un error cuando el date es nulo 
 df.loc[df['date'] == '', 'date'] = '2024-06-17'
 
 # Exportamos dataframe a postgresql, reemplazamos toda la data de la tabla desde cero

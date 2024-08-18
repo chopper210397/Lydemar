@@ -196,6 +196,55 @@
         <input type="number" step="0.0001" min=0 name="precio_x_caja_o_saco-7" placeholder="Precio x caja o saco">
       </div>
 
+      <div class="productos">
+        <div class="numero">9</div>
+        <select name="producto-8" placeholder="Producto">
+          {% for producto in producto %}
+          <option value="{{ producto }}">{{producto}}</option>
+          {% endfor %}
+        </select>
+        <input type="number" step="0.0001" min=0 name="cantidad_en_cajas_o_sacos-8" placeholder="Cantidad en cajas o sacos">
+        <select name="tipo_medida-8" placeholder="Medida">
+          <option value="Caja">CAJA</option>
+          <option value="Saco">SACO</option>
+          <option value="Unidad">UNIDAD</option>
+        </select>
+        <input type="number" step="0.0001" min=0 name="precio_x_caja_o_saco-8" placeholder="Precio x caja o saco">
+      </div>
+      
+      <div class="productos">
+        <div class="numero">10</div>
+        <select name="producto-9" placeholder="Producto">
+          {% for producto in producto %}
+          <option value="{{ producto }}">{{producto}}</option>
+          {% endfor %}
+        </select>
+        <input type="number" step="0.0001" min=0 name="cantidad_en_cajas_o_sacos-9" placeholder="Cantidad en cajas o sacos">
+        <select name="tipo_medida-9" placeholder="Medida">
+          <option value="Caja">CAJA</option>
+          <option value="Saco">SACO</option>
+          <option value="Unidad">UNIDAD</option>
+        </select>
+        <input type="number" step="0.0001" min=0 name="precio_x_caja_o_saco-9" placeholder="Precio x caja o saco">
+      </div>
+
+      <div class="productos">
+        <div class="numero">11</div>
+        <select name="producto-10" placeholder="Producto">
+          {% for producto in producto %}
+          <option value="{{ producto }}">{{producto}}</option>
+          {% endfor %}
+        </select>
+        <input type="number" step="0.0001" min=0 name="cantidad_en_cajas_o_sacos-10" placeholder="Cantidad en cajas o sacos">
+        <select name="tipo_medida-10" placeholder="Medida">
+          <option value="Caja">CAJA</option>
+          <option value="Saco">SACO</option>
+          <option value="Unidad">UNIDAD</option>
+        </select>
+        <input type="number" step="0.0001" min=0 name="precio_x_caja_o_saco-10" placeholder="Precio x caja o saco">
+      </div>
+
+
       <input type="submit" value="Registrar">
     </div>
 
