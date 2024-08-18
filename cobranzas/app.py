@@ -11,7 +11,7 @@ import unidecode
 from pretty_html_table import build_table
 
 # Definiendo entorno bajo el cual trabajaremos
-entorno = "development"
+entorno = "production"
 
 if entorno == "production":
   current_dir = os.getcwd()
