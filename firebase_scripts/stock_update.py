@@ -132,6 +132,7 @@ doc_ref.add({u'brand': u'p-ruvian mar',
 #-------------------------------------------------------------------------#
 # Traer data de products de firebase para actualizarlo y subirlo de golpe #
 # ------------------------------------------------------------------------#
+# Por lo general usamos esta parte para dejar el stock de todos los productos de firebase en cero
 import firebase_admin
 from firebase_admin import credentials, firestore
 import pandas as pd
@@ -139,7 +140,7 @@ import os
 import ast
 
 # Ruta al archivo de credenciales
-cred_path = os.path.join("firebase_scripts", "ServiceAccountKey.json")
+cred_path = os.path.join("firebase_scripts", "lydemar-29f4b-firebase-adminsdk-blw1a-4c417bf6c2.json")
 
 # Leyendo el service account credential
 cred = credentials.Certificate(cred_path)
