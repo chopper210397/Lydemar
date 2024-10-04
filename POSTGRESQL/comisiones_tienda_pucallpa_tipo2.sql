@@ -37,9 +37,9 @@ ComisionesCalculadas AS (
             WHEN "productName" LIKE ('LAVAVAJILLA LESLI%') THEN 0.005
             WHEN "productName" LIKE ('%ÑAPANCHA%') THEN 0.005
             WHEN "productName" LIKE ('DETERGENTE%') THEN 0.005
-            WHEN "productName" LIKE ('PILLCO MOZO%') THEN 0.005
-            WHEN "productName" LIKE ('PILLCO REY%') THEN 0.005
-            WHEN "productName" LIKE ('ACEITE%') THEN 0.005
+            WHEN "productName" LIKE ('PILLCO MOZO%') THEN 0.000
+            WHEN "productName" LIKE ('PILLCO REY%') THEN 0.000
+            WHEN "productName" LIKE ('ACEITE%') THEN 0.000
             WHEN "productName" LIKE ('SHAMPOO%') THEN 0.005
             WHEN "productName" LIKE ('BANQUITO RATAN%') THEN 0.005
             WHEN "productName" LIKE ('VELA%') THEN 0.005
@@ -69,9 +69,9 @@ ComisionesCalculadas AS (
             WHEN "productName" LIKE ('LAVAVAJILLA LESLI%') THEN 0.005
             WHEN "productName" LIKE ('%ÑAPANCHA%') THEN 0.005
             WHEN "productName" LIKE ('DETERGENTE%') THEN 0.005
-            WHEN "productName" LIKE ('PILLCO MOZO%') THEN 0.005
-            WHEN "productName" LIKE ('PILLCO REY%') THEN 0.005
-            WHEN "productName" LIKE ('ACEITE%') THEN 0.005
+            WHEN "productName" LIKE ('PILLCO MOZO%') THEN 0.000
+            WHEN "productName" LIKE ('PILLCO REY%') THEN 0.000
+            WHEN "productName" LIKE ('ACEITE%') THEN 0.000
             WHEN "productName" LIKE ('SHAMPOO%') THEN 0.005
             WHEN "productName" LIKE ('BANQUITO RATAN%') THEN 0.005
             WHEN "productName" LIKE ('VELA%') THEN 0.005
@@ -102,6 +102,7 @@ SELECT
     round(SUM(Comision)) AS ComisionTotalMes
 FROM ComisionesCalculadas
 where Fecha not in ('2024-06-11','2024-06-12','2024-06-27','2024-06-28',
-                    '2024-07-05','2024-07-22','2024-07-24') -- son fechas que priscila no trabajó, por ende no se le paga comisiones
+                    '2024-07-05','2024-07-22','2024-07-24'
+                    ,'2024-08-11','2024-08-16','2024-08-17','2024-08-18') -- son fechas que priscila no trabajó, por ende no se le paga comisiones
 GROUP BY mes
 ORDER BY mes desc;

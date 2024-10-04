@@ -24,7 +24,7 @@ from psycopg2 import sql
 borrar_vistas_comisiones()
 
 # Llamamos las credenciales de firebase y nos conectamos a ella
-cred = credentials.Certificate("firebase_scripts\ServiceAccountKey.json")
+cred = credentials.Certificate("firebase_scripts\lydemar-29f4b-firebase-adminsdk-blw1a-4c417bf6c2.json")
 app = firebase_admin.initialize_app(cred)
 store = firestore.client()
 
