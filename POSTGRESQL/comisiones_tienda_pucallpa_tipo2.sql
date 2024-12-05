@@ -34,7 +34,7 @@ ComisionesCalculadas AS (
             WHEN "productName" LIKE ('GELATINA%') THEN 0.005
             WHEN "productName" LIKE ('FLAN%') THEN 0.005
             WHEN "productName" LIKE ('MAZAMORRA%') THEN 0.005
-            WHEN "productName" LIKE ('LAVAVAJILLA LESLI%') THEN 0.005
+            WHEN "productName" LIKE ('LAVAVAJILLA LESLI%') THEN 0.000
             WHEN "productName" LIKE ('%ÑAPANCHA%') THEN 0.005
             WHEN "productName" LIKE ('DETERGENTE%') THEN 0.005
             WHEN "productName" LIKE ('PILLCO MOZO%') THEN 0.000
@@ -43,19 +43,19 @@ ComisionesCalculadas AS (
             WHEN "productName" LIKE ('SHAMPOO%') THEN 0.005
             WHEN "productName" LIKE ('BANQUITO RATAN%') THEN 0.005
             WHEN "productName" LIKE ('VELA%') THEN 0.005
-            WHEN "productName" LIKE ('GRATED%') THEN 0.01
-            WHEN "productName" LIKE ('OVAL%') THEN 0.01
-            WHEN "productName" LIKE ('TINAPA%') THEN 0.01
-            WHEN "productName" LIKE ('TINAPON%') THEN 0.01
-            WHEN "productName" LIKE ('FILETE DE CABALLA%') THEN 0.01
+            WHEN "productName" LIKE ('GRATED%') THEN 0.005
+            WHEN "productName" LIKE ('OVAL%') THEN 0.005
+            WHEN "productName" LIKE ('TINAPA%') THEN 0.005
+            WHEN "productName" LIKE ('TINAPON%') THEN 0.005
+            WHEN "productName" LIKE ('FILETE DE CABALLA%') THEN 0.005
             WHEN "productName" LIKE ('LAPICERO%') THEN 0.01
             WHEN "productName" LIKE ('ESPIRAL%') THEN 0.01
             WHEN "productName" LIKE ('ENCENDEDOR%') THEN 0.01
             WHEN "productName" LIKE ('PASTA DENTAL%') THEN 0.01
             WHEN "productName" LIKE ('LAVAVAJILLA QMASTER%') THEN 0.01
             WHEN "productName" LIKE ('LEJIA%') THEN 0.01
-            WHEN "productName" LIKE ('%ATUN%') THEN 0.015
-            WHEN "productName" LIKE ('%ATÚN%') THEN 0.015
+            WHEN "productName" LIKE ('%ATUN%') THEN 0.005
+            WHEN "productName" LIKE ('%ATÚN%') THEN 0.005
             WHEN "productName" LIKE ('VINO%') THEN 0.02
             WHEN "productName" LIKE ('RON%') THEN 0.02
             WHEN "productName" LIKE ('LIMPIATODO%') THEN 0.02
@@ -66,7 +66,7 @@ ComisionesCalculadas AS (
             WHEN "productName" LIKE ('GELATINA%') THEN 0.005
             WHEN "productName" LIKE ('FLAN%') THEN 0.005
             WHEN "productName" LIKE ('MAZAMORRA%') THEN 0.005
-            WHEN "productName" LIKE ('LAVAVAJILLA LESLI%') THEN 0.005
+            WHEN "productName" LIKE ('LAVAVAJILLA LESLI%') THEN 0.000
             WHEN "productName" LIKE ('%ÑAPANCHA%') THEN 0.005
             WHEN "productName" LIKE ('DETERGENTE%') THEN 0.005
             WHEN "productName" LIKE ('PILLCO MOZO%') THEN 0.000
@@ -75,19 +75,19 @@ ComisionesCalculadas AS (
             WHEN "productName" LIKE ('SHAMPOO%') THEN 0.005
             WHEN "productName" LIKE ('BANQUITO RATAN%') THEN 0.005
             WHEN "productName" LIKE ('VELA%') THEN 0.005
-            WHEN "productName" LIKE ('GRATED%') THEN 0.01
-            WHEN "productName" LIKE ('OVAL%') THEN 0.01
-            WHEN "productName" LIKE ('TINAPA%') THEN 0.01
-            WHEN "productName" LIKE ('TINAPON%') THEN 0.01
-            WHEN "productName" LIKE ('FILETE DE CABALLA%') THEN 0.01
+            WHEN "productName" LIKE ('GRATED%') THEN 0.005
+            WHEN "productName" LIKE ('OVAL%') THEN 0.005
+            WHEN "productName" LIKE ('TINAPA%') THEN 0.005
+            WHEN "productName" LIKE ('TINAPON%') THEN 0.005
+            WHEN "productName" LIKE ('FILETE DE CABALLA%') THEN 0.005
             WHEN "productName" LIKE ('LAPICERO%') THEN 0.01
             WHEN "productName" LIKE ('ESPIRAL%') THEN 0.01
             WHEN "productName" LIKE ('ENCENDEDOR%') THEN 0.01
             WHEN "productName" LIKE ('PASTA DENTAL%') THEN 0.01
             WHEN "productName" LIKE ('LAVAVAJILLA QMASTER%') THEN 0.01
             WHEN "productName" LIKE ('LEJIA%') THEN 0.01
-            WHEN "productName" LIKE ('%ATUN%') THEN 0.015
-            WHEN "productName" LIKE ('%ATÚN%') THEN 0.015
+            WHEN "productName" LIKE ('%ATUN%') THEN 0.005
+            WHEN "productName" LIKE ('%ATÚN%') THEN 0.005
             WHEN "productName" LIKE ('VINO%') THEN 0.02
             WHEN "productName" LIKE ('RON%') THEN 0.02
             WHEN "productName" LIKE ('LIMPIATODO%') THEN 0.02
@@ -101,8 +101,9 @@ SELECT
     date_trunc('month',Fecha)::date mes,
     round(SUM(Comision)) AS ComisionTotalMes
 FROM ComisionesCalculadas
-where Fecha not in ('2024-06-11','2024-06-12','2024-06-27','2024-06-28',
-                    '2024-07-05','2024-07-22','2024-07-24'
-                    ,'2024-08-11','2024-08-16','2024-08-17','2024-08-18') -- son fechas que priscila no trabajó, por ende no se le paga comisiones
+where Fecha not in ('2024-06-11','2024-06-12','2024-06-27','2024-06-28'
+                    ,'2024-07-05','2024-07-22','2024-07-24'
+                    ,'2024-08-11','2024-08-16','2024-08-17','2024-08-18'
+                    ,'2024-11-09','2024-11-10','2024-11-25','2024-11-30') -- son fechas que priscila no trabajó, por ende no se le paga comisiones
 GROUP BY mes
 ORDER BY mes desc;

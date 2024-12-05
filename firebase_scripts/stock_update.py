@@ -47,6 +47,11 @@ conn = psycopg2.connect(
 # Create a cursor
 cur = conn.cursor()
 
+# Borramos la data existente de la tabla products para no duplicar
+cur.execute(
+      "DELETE FROM products"
+  )
+
 # Insert the products into the database
 for product in products_list:
   cur.execute(
