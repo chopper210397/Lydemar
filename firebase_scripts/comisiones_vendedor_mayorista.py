@@ -11,16 +11,17 @@ from google.oauth2.service_account import Credentials
 import psycopg2
 import psycopg2.extras as extras
 from sqlalchemy import create_engine
+from datetime import datetime
 
-creds = Credentials.from_service_account_file(r'lydemar_googlesheet.json', 
+creds = Credentials.from_service_account_file(r'firebase_scripts\lydemar_googlesheet.json', 
                                               scopes=['https://www.googleapis.com/auth/spreadsheets'])
 # Reading googlesheet
 client = gspread.authorize(creds)
 sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1YTsHJWoeBouUWHKPvGzZHum_ppVPyYFeovEhoB-AqKA/edit?usp=sharing')
-
 worksheet = sheet.worksheet('TABLA COMISIÓN ALDAIR - MASTER')
 df=worksheet.get_all_records()
 
+# Con esto ya tenemos la tabla de comisiones lista para ser usada
 tabla_comisiones = pd.DataFrame.from_dict(df)
 
 # Reading postgresql database
@@ -42,7 +43,7 @@ Cobros_Ultimos_Octubre AS (
         c.numero_documento,
         MAX(c.fecha) AS ultima_fecha_cobro
     FROM cobranzas c
-    WHERE DATE_TRUNC('month', c.fecha) = '2024-10-01'
+    WHERE DATE_TRUNC('month', c.fecha) = '2024-11-01'
     GROUP BY c.numero_documento
 ),
 Ventas_Vendedor_Aldair AS (
@@ -96,5 +97,8 @@ comisiones_finales = pd.merge(ventas_a_comisionar, tabla_comisiones, how='left',
 comisiones_finales['comision_calculada'] = comisiones_finales['precio_total'] * comisiones_finales['COMISIONES']
 
 # Exportamos data de comisiones
-comisiones_finales.to_excel('comisiones_finales_vendedor_mayorista.xlsx', index=False)
+fecha_hoy = datetime.today().strftime('%Y_%m_%d')
+nombre_tabla = "comisiones_finales_vendedor_mayorista"
+nombre_archivo = f"{nombre_tabla}_{fecha_hoy}.xlsx"
+comisiones_finales.to_excel(nombre_archivo, index=False)
 comisiones_finales["comision_calculada"].sum()
