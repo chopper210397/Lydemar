@@ -43,7 +43,7 @@ Cobros_Ultimos_Octubre AS (
         c.numero_documento,
         MAX(c.fecha) AS ultima_fecha_cobro
     FROM cobranzas c
-    WHERE DATE_TRUNC('month', c.fecha) = '2024-11-01'
+    WHERE DATE_TRUNC('month', c.fecha) = '2024-12-01'
     GROUP BY c.numero_documento
 ),
 Ventas_Vendedor_Aldair AS (

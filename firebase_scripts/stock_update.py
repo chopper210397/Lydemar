@@ -179,6 +179,9 @@ for doc in docs:
 # Leemos excel modificado
 df = pd.read_excel("products.xlsx")
 
+# Convertimos los stocks a cero
+df["stock"] = 0
+
 # Convertir la columna 'unit' a listas
 df['unit'] = df['unit'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
 

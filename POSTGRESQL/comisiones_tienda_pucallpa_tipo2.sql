@@ -104,6 +104,7 @@ FROM ComisionesCalculadas
 where Fecha not in ('2024-06-11','2024-06-12','2024-06-27','2024-06-28'
                     ,'2024-07-05','2024-07-22','2024-07-24'
                     ,'2024-08-11','2024-08-16','2024-08-17','2024-08-18'
-                    ,'2024-11-09','2024-11-10','2024-11-25','2024-11-30') -- son fechas que priscila no trabajó, por ende no se le paga comisiones
+                    ,'2024-11-09','2024-11-10','2024-11-25','2024-11-30'
+                    ,'2025-01-01','2025-01-02','2025-01-03') -- son fechas que priscila no trabajó, por ende no se le paga comisiones
 GROUP BY mes
 ORDER BY mes desc;
