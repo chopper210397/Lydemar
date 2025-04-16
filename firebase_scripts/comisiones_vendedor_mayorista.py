@@ -15,7 +15,7 @@ from datetime import datetime
 
 creds = Credentials.from_service_account_file(r'firebase_scripts\lydemar_googlesheet.json', 
                                               scopes=['https://www.googleapis.com/auth/spreadsheets'])
-# Reading googlesheet
+# Reading COMISSIONS googlesheet 
 client = gspread.authorize(creds)
 sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1YTsHJWoeBouUWHKPvGzZHum_ppVPyYFeovEhoB-AqKA/edit?usp=sharing')
 worksheet = sheet.worksheet('TABLA COMISIÓN ALDAIR - MASTER')
@@ -82,6 +82,19 @@ where numero_documento  in (select distinct numero_documento  from Ventas_a_comi
 order by numero_documento asc, producto asc"""  # Reemplaza con tu consulta o nombre de tabla
 
 ventas_a_comisionar = pd.read_sql_query(query, engine)
+
+#------------------------------------------------------------------------------------------------------------
+#                                          EMERGENCIA                                                       #
+#------------------------------------------------------------------------------------------------------------
+# En caso de emergencia estamos creando esta lectura de las ventas desde un googlesheet pero
+# no es la forma optima de trabajar
+# sheet_ventas = client.open_by_url('https://docs.google.com/spreadsheets/d/1GGUZ0ebYYRbxerMb3Iml1y8BMhvH3a0z1OB8DSpfBg4/edit?usp=sharing')
+# worksheet_ventas = sheet_ventas.worksheet('ventas')
+# df_ventas=worksheet_ventas.get_all_records()
+# ventas_a_comisionar = pd.DataFrame.from_dict(df_ventas)
+# ventas_a_comisionar = ventas_a_comisionar.rename(columns={'TOTAL': 'precio_total'})
+#------------------------------------------------------------------------------------------------------------
+
 
 # Quitamos los espacios al final de la columna producto
 ventas_a_comisionar['producto'] = ventas_a_comisionar['producto'].str.strip()
