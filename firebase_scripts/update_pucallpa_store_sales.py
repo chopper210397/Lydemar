@@ -69,39 +69,39 @@ connection.close()
 
 #----------------------------------------------------------------------
 
-type_map = {
-    'int64': 'BIGINT',
-    'float64': 'FLOAT',
-    'object': 'TEXT',
-    'datetime64[ns]': 'TIMESTAMP',
-    'bool': 'BOOLEAN',
-    # Puedes agregar más tipos si los necesitas
-}
+# type_map = {
+#     'int64': 'BIGINT',
+#     'float64': 'FLOAT',
+#     'object': 'TEXT',
+#     'datetime64[ns]': 'TIMESTAMP',
+#     'bool': 'BOOLEAN',
+#     # Puedes agregar más tipos si los necesitas
+# }
 
-# Función para generar la sentencia CREATE TABLE
-def generate_create_table_sql(df, table_name):
-    columns_with_types = []
+# # Función para generar la sentencia CREATE TABLE
+# def generate_create_table_sql(df, table_name):
+#     columns_with_types = []
     
-    for col, dtype in df.dtypes.items():
-        # Obtener el tipo SQL correspondiente
-        sql_type = type_map.get(str(dtype), 'TEXT')  # Por defecto 'TEXT' si no se encuentra en el mapa
-        columns_with_types.append(f'"{col}" {sql_type}')
+#     for col, dtype in df.dtypes.items():
+#         # Obtener el tipo SQL correspondiente
+#         sql_type = type_map.get(str(dtype), 'TEXT')  # Por defecto 'TEXT' si no se encuentra en el mapa
+#         columns_with_types.append(f'"{col}" {sql_type}')
     
-    # Unir las columnas y tipos en una cadena
-    columns_sql = ',\n    '.join(columns_with_types)
+#     # Unir las columnas y tipos en una cadena
+#     columns_sql = ',\n    '.join(columns_with_types)
     
-    # Sentencia CREATE TABLE
-    create_table_sql = f"""
-CREATE TABLE IF NOT EXISTS {table_name} (
-    {columns_sql}
-);
-"""
+#     # Sentencia CREATE TABLE
+#     create_table_sql = f"""
+# CREATE TABLE IF NOT EXISTS {table_name} (
+#     {columns_sql}
+# );
+# """
     
-    return create_table_sql
+#     return create_table_sql
 
-# Generar la sentencia CREATE TABLE para tu DataFrame
-table_name = 'ventas_tienda_mercado_mayorista_pucallpa'
-create_table_sql = generate_create_table_sql(df, table_name)
+# # Generar la sentencia CREATE TABLE para tu DataFrame
+# table_name = 'ventas_tienda_mercado_mayorista_pucallpa'
+# create_table_sql = generate_create_table_sql(df, table_name)
 
-# Imprimir la sentencia SQL
-print(create_table_sql)
+# # Imprimir la sentencia SQL
+# print(create_table_sql)

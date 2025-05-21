@@ -29,6 +29,7 @@ tabla_comisiones = pd.DataFrame.from_dict(df)
 engine = create_engine('postgresql+psycopg2://postgres:rufo2324@161.35.184.122:5432/lydemar_peruvian_delimar')
 
 # Ejecutamos una consulta y cargamos el resultado en un DataFrame
+# Aqui solo debes cambiar la fecha que está dentro de la tabla Cobros_Ultimos_Octubre
 query = """-- todas las ventas del mes seleccionado que entran para el cálculo de las comisiones de aldair
 
 WITH Total_Cobrado_Documento AS (
@@ -43,7 +44,7 @@ Cobros_Ultimos_Octubre AS (
         c.numero_documento,
         MAX(c.fecha) AS ultima_fecha_cobro
     FROM cobranzas c
-    WHERE DATE_TRUNC('month', c.fecha) = '2024-12-01'
+    WHERE DATE_TRUNC('month', c.fecha) = '2025-04-01'
     GROUP BY c.numero_documento
 ),
 Ventas_Vendedor_Aldair AS (
