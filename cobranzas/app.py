@@ -11,7 +11,7 @@ import unidecode
 from pretty_html_table import build_table
 
 # Definiendo entorno bajo el cual trabajaremos
-entorno = "production"
+entorno = "development"
 
 if entorno == "production":
   current_dir = os.getcwd()
@@ -113,61 +113,71 @@ class Cobranzas(db.Model):
 
     return data
 
-# Rutas
-# @app.route('/', methods=['GET', 'POST'])
-# def index():
-#     if request.method == 'POST':
-#         fecha = request.form['fecha']
-#         cliente = request.form['cliente']
-#         tipo_de_documento = request.form['factura_o_nota_de_pedido']
-#         numero_documento = request.form['n_documento']
-#         vendedor = request.form['vendedor']
-#         ubicacion = request.form['ubicacion']
+class Compras(db.Model):
+  __tablename__ = 'compras'
 
-#         # Obtener todos los productos enviados desde el formulario
-#         productos = []
-#         cantidad_productos = int(request.form['cantidad_productos_a_registrar'])  # Cambia esto al número deseado de productos a registrar
+  id = db.Column(db.Integer, primary_key=True)
+  fecha = db.Column(db.Date)
+  proveedor = db.Column(db.String(255))
+  tipo_de_documento = db.Column(db.String(255))
+  numero_documento = db.Column(db.String(255))
+  producto = db.Column(db.String(255))
+  cantidad = db.Column(db.Integer)
+  precio_unitario = db.Column(db.Float)
+  precio_total = db.Column(db.Float)
+  medio_pago = db.Column(db.String(255))
+  timestamp = db.Column(db.DateTime)
 
-#         for i in range(cantidad_productos):
-#             producto = request.form.getlist(f"producto-{i}")
-#             cantidad = request.form.getlist(f"cantidad_en_cajas_o_sacos-{i}")
-#             tipo_medida = request.form.getlist(f"tipo_medida-{i}")
-#             precio_unitario = request.form.getlist(f"precio_x_caja_o_saco-{i}")
+  def to_dict(self):
+    return {
+      'id': self.id,
+      'fecha': self.fecha,
+      'proveedor': self.proveedor,
+      'tipo_de_documento': self.tipo_de_documento,
+      'numero_documento': self.numero_documento,
+      'producto': self.producto,
+      'cantidad': self.cantidad,
+      'precio_unitario': self.precio_unitario,
+      'precio_total': self.precio_total,
+      'medio_pago': self.medio_pago,
+      'timestamp': self.timestamp
+    }
 
-#             productos.append({
-#                 'producto': producto,
-#                 'cantidad': cantidad,
-#                 'tipo_medida': tipo_medida,
-#                 'precio_unitario': precio_unitario
-#             })
+@app.route('/compras', methods=['GET', 'POST'])
+def compras():
+  if request.method == 'POST':
+    fecha = datetime.strptime(request.form['fecha'], '%Y-%m-%d').date()
+    proveedor = request.form['proveedor']
+    tipo_de_documento = request.form['tipo_de_documento']
+    numero_documento = request.form['numero_documento']
+    producto = request.form['producto']
+    cantidad = int(request.form['cantidad'])
+    precio_unitario = float(request.form['precio_unitario'])
+    medio_pago = request.form['medio_pago']
+    timestamp = datetime.now()
 
-#         timestamp = datetime.now()
+    compra = Compras(
+      fecha=fecha,
+      proveedor=proveedor,
+      tipo_de_documento=tipo_de_documento,
+      numero_documento=numero_documento,
+      producto=producto,
+      cantidad=cantidad,
+      precio_unitario=precio_unitario,
+      precio_total=cantidad * precio_unitario,
+      medio_pago=medio_pago,
+      timestamp=timestamp
+    )
 
-#         # Registrar múltiples productos en la base de datos
-#         for prod in productos:
-#             for i in range(len(prod['producto'])):
-#                 venta = Ventas_mayorista(
-#                     fecha=fecha,
-#                     cliente=cliente,
-#                     tipo_de_documento=tipo_de_documento,
-#                     numero_documento=numero_documento,
-#                     producto=prod['producto'][i],
-#                     cantidad=prod['cantidad'][i],
-#                     tipo_medida=prod['tipo_medida'][i],
-#                     precio_unitario=prod['precio_unitario'][i],
-#                     precio_total=float(prod['cantidad'][i]) * float(prod['precio_unitario'][i]),
-#                     timestamp=timestamp,
-#                     vendedor=vendedor,
-#                     ubicacion=ubicacion
-#                 )
-#                 db.session.add(venta)
+    db.session.add(compra)
+    db.session.commit()
 
-#         db.session.commit()
-#         return redirect(url_for('index'))
-#     else:
-#         producto = Products.query.with_entities(Products.product_name).all()
-#         lista_productos = list(itertools.chain(*producto))
-#         return render_template('index.html', producto=lista_productos)
+    flash("Compra registrada correctamente", "success")
+    return redirect(url_for('compras'))
+
+  return render_template('compras.html')
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
